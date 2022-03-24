@@ -1,7 +1,7 @@
 const mqtt = require('async-mqtt');
 const MQTT_OPTIONS = require('./config/mqtt_options');
 const { SENSOR_TOPICS } = require('./constants/mqtt_topics');
-const {handleIncomingMessage} = require('./utils/mqtt_utils');
+const {handleIncomingMessage} = require('./utils/mqtt.utils');
 
 if (process.env.NODE_ENV == 'dev') {
     require('dotenv').config();

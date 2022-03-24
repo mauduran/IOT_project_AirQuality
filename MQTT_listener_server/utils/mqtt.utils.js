@@ -1,4 +1,4 @@
-const { messageForwardingFunctions } = require('./utils/message_forwarding.utils');
+const { messageForwardingFunctions } = require('./message_forwarding.utils');
 
 const handleIncomingMessage = (topic, payload) => {
     console.log(`Incoming message to ${topic}`);
