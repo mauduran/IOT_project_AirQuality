@@ -10,11 +10,11 @@ const authenticate = async (accountId, password) => {
         headers: HTTP_HEADERS
     }
 
-    const response = await axios.post(`${process.env.API_GATEWAY_URL}/login`,
+    const response = await axios.post(`${process.env.API_GATEWAY_URL}/account/login`,
         { accountId, password },
         configParams
     );
-    return response.data;
+    return response.data.token;
 
 }
 
