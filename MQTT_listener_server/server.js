@@ -1,6 +1,7 @@
 const mqtt = require('async-mqtt');
 const MQTT_OPTIONS = require('./config/mqtt_options');
-const { SENSOR_TOPICS } = require('./utils/mqtt_utils');
+const { SENSOR_TOPICS } = require('./constants/mqtt_topics');
+const { messageForwardingFunctions } = require('./utils/message_forwarding.utils');
 
 if (process.env.NODE_ENV == 'dev') {
     require('dotenv').config();
@@ -19,6 +20,7 @@ const handleFailedMqttConnection = (err) => {
     console.log(err);
 }
 
+
 const handleIncomingMessage = (topic, payload) => {
     console.log(`Incoming message to ${topic}`);
 
@@ -32,31 +34,14 @@ const handleIncomingMessage = (topic, payload) => {
             console.log("Error. Invalid JSON payload.");
         } else {
             console.log(`AccountId ${accountId} - ${measurement}: ${message.value} ${message.measurement}`);
-            switch (measurement) {
-                case "temperature":
-                    console.log("Temperature message");
-                    break;
-                case "voc":
-                    console.log("VOC message");
-                    break;
-                case "humidity":
-                    console.log("Humidity message");
-                    break;
-                case "co2":
-                    console.log("CO2 message");
-                    break;
-                case "pm25":
-                    console.log("PM2.5 message");
-                    break;
-                case "pm10":
-                    console.log("PM10 message");
-                    break;
-                default:
-                    console.log("Invalid sensor measurement on topic.");
+            if (messageForwardingFunctions[measurement]) {
+                messageForwardingFunctions[measurement](accountId, message);
+            } else {
+                console.log("Invalid sensor measurement on topic.");
             }
-
         }
     } catch (error) {
+        console.log(error);
         console.log(`Error. Could not process ${measurement} payload sent to ${accountId}. Please send JSON message.`);
     }
 
