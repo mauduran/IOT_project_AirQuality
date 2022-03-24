@@ -1,0 +1,20 @@
+{
+  "name": "mqtt_listener_server",
+  "version": "1.0.0",
+  "description": "Message listener for sensor data coming from microcontroller ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node .",
+    "dev": "NODE_ENV=dev nodemon .",
+    "dev2": "SET NODE_ENV=dev nodemon ."
+  },
+  "author": "mauduran",
+  "license": "ISC",
+  "dependencies": {
+    "async-mqtt": "^2.6.2",
+    "dotenv": "^16.0.0",
+    "node-fetch": "^3.2.3",
+    "nodemon": "^2.0.15"
+  }
+}

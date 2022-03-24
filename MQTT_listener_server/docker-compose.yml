@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  iot-air-quality-message-listener:
+    container_name: mqtt-message-listeener
+    build: ./
+    command: npm run dev
+    working_dir: /usr/src/
+    environment:
+      PORT: ${PORT}
+      TOKEN_SECRET: ${TOKEN_SECRET}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      SERVERLESS_API_KEY: ${SERVERLESS_API_KEY}
+      API_GATEWAY_URL: ${API_GATEWAY_URL}
+      MQTT_ENDPOINT: ${MQTT_ENDPOINT}
+
+    ports:
+      - "${HOST_PORT}:${PORT}"
