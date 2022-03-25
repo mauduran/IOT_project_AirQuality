@@ -93,7 +93,22 @@ functions:
             path: account/description
             method: PUT
             cors: true
-
+  
+  StoreTemperature:
+    handler: lambdas/endpoints/sensors/temperature/StoreTemperature.handler
+    events:
+      - http:
+            path: temperature/
+            method: POST
+            cors: true
+            private: true
+  GetLastTemperature:
+    handler: lambdas/endpoints/sensors/temperature/GetLastTemperature.handler
+    events:
+      - http:
+            path: temperature/most-recent
+            method: GET
+            cors: true
   sendSMS:
     handler: lambdas/endpoints/sms/sendSMS.handler
     events:
