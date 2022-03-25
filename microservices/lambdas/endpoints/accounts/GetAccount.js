@@ -16,8 +16,6 @@ const findAccountByName = async (accountName) => {
 exports.handler = async event => {
     try {
         const authorization = event.headers && event.headers.Authorization;
-        console.log(event.headers.Authorization);
-        console.log(process.env.tokenSecret);
 
         if (!authorization) return Responses._401({ message: 'Unauthorized' });
 
