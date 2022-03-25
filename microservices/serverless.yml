@@ -98,15 +98,22 @@ functions:
     handler: lambdas/endpoints/sensors/temperature/StoreTemperature.handler
     events:
       - http:
-            path: temperature/
+            path: temperatures/
             method: POST
             cors: true
             private: true
+  GetTemperatures:
+    handler: lambdas/endpoints/sensors/temperature/GetTemperatures.handler
+    events:
+      - http:
+            path: temperatures/
+            method: GET
+            cors: true
   GetLastTemperature:
     handler: lambdas/endpoints/sensors/temperature/GetLastTemperature.handler
     events:
       - http:
-            path: temperature/most-recent
+            path: temperatures/most-recent
             method: GET
             cors: true
   sendSMS:

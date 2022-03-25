@@ -33,6 +33,7 @@ exports.handler = async event => {
     const { accountName, password } = body;
     try {
         const account = await findAccountByName(accountName);
+        if(!account) return Responses._400({ error: true, message: "Account does not exist." });
         await verifyCredentials(account.p_hash, password);
         const token = jwt.sign({
             accountName,
