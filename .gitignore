@@ -9,6 +9,7 @@ lerna-debug.log*
 #Mac Dir
 *.DS_Store
 
+*.webpack
 #Docker
 *Dockerfile.copy
 
