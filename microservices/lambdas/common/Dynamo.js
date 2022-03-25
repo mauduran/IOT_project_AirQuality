@@ -66,6 +66,21 @@ const Dynamo = {
                 return data.Items
             });
     },
+    async queryDocumentsSkBeginsAndParams(pk, sk, extraParams) {
+        const params = {
+            KeyConditionExpression: "PK = :pk  and begins_with (SK, :sk)",
+            ExpressionAttributeValues: {
+                ":pk": pk,
+                ":sk": sk
+            },
+            TableName: process.env.tableName,
+            ...extraParams
+        }
+        return dynamoDB.query(params).promise()
+            .then(data => {
+                return data.Items
+            });
+    },
     async queryDocumentsSkBeginsAndOtherCondition(pk, sk, condition, value) {
         const params = {
             KeyConditionExpression: `PK = :pk  and begins_with (SK, :sk)` ,
