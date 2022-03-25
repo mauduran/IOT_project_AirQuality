@@ -7,6 +7,7 @@ const handleIncomingMessage = (topic, payload) => {
     const accountId = topicSplit[0];
     const measurement = topicSplit[1]
     try {
+        console.log(payload.toString());
         message = JSON.parse(payload.toString());
 
         if (!message.measurement || !message.value || !message.accountPassword) {
