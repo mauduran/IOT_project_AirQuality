@@ -1,4 +1,5 @@
 const axios = require('axios').default;
+const { HTTP_HEADERS_AUTH } = require('../constants/http_headers');
 
 if (process.env.NODE_ENV == 'dev') {
     require('dotenv').config();
@@ -6,57 +7,48 @@ if (process.env.NODE_ENV == 'dev') {
 
 const { authenticate } = require('./authentication');
 
-const storeTemperature = async (accountId, payload) => {
+const storeSensorData = async(path, accountName, payload) => {
     try {
-        const token = await authenticate(accountId, payload.accountPassword);
+        const { value, measurement } = payload;
 
+        if(!value || !measurement ) return;
+
+        await authenticate(accountName, payload.accountPassword);
+
+        const configParams = {
+            headers: HTTP_HEADERS_AUTH
+        }
+
+        const response = await axios.post(`${process.env.API_GATEWAY_URL}/${path}`,
+            { measurement, value, accountName: accountName },
+            configParams
+        );
     } catch (error) {
-        console.log(error);
+        console.log(error.response.data);
     }
 }
 
-const storeVOC = async (accountId, payload) => {
-    try {
-        const token = await authenticate(accountId, payload.accountPassword);
-
-    } catch (error) {
-        console.log(error);
-    }
+const storeTemperature = async (accountName, payload) => {
+    await storeSensorData("temperature", accountName, payload);
 }
 
-const storeHumidity = async (accountId, payload) => {
-    try {
-        const token = await authenticate(accountId, payload.accountPassword);
-
-    } catch (error) {
-        console.log(error);
-    }
+const storeVOC = async (accountName, payload) => {
+    await storeSensorData("voc", accountName, payload);
 }
 
-const storePM25 = async (accountId, payload) => {
-    try {
-        const token = await authenticate(accountId, payload.accountPassword);
-
-    } catch (error) {
-        console.log(error);
-    }
-}
-const storePM10 = async (accountId, payload) => {
-    try {
-        const token = await authenticate(accountId, payload.accountPassword);
-
-    } catch (error) {
-        console.log(error);
-    }
+const storeHumidity = async (accountName, payload) => {
+    await storeSensorData("humidity", accountName, payload);
 }
 
-const storeCO2 = async (accountId, payload) => {
-    try {
-        const token = await authenticate(accountId, payload.accountPassword);
+const storePM25 = async (accountName, payload) => {
+    await storeSensorData("pm25", accountName, payload);
+}
+const storePM10 = async (accountName, payload) => {
+    await storeSensorData("pm10", accountName, payload);
+}
 
-    } catch (error) {
-        console.log(error);
-    }
+const storeCO2 = async (accountName, payload) => {
+    await storeSensorData("co2", accountName, payload);
 }
 
 const messageForwardingFunctions = {

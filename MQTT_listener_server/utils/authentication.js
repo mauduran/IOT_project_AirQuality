@@ -5,13 +5,13 @@ if (process.env.NODE_ENV == 'dev') {
     require('dotenv').config();
 }
 
-const authenticate = async (accountId, password) => {
+const authenticate = async (accountName, password) => {
     const configParams = {
         headers: HTTP_HEADERS
     }
 
     const response = await axios.post(`${process.env.API_GATEWAY_URL}/account/login`,
-        { accountId, password },
+        { accountName, password },
         configParams
     );
     return response.data.token;
