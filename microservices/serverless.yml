@@ -71,13 +71,23 @@ functions:
               path: accounts/{accountName}
               method: GET
               cors: true
-  addPhoneNumber:
-        handler: lambdas/endpoints/accounts/UpdateAccountPhoneNumber.handler
+
+  registerPhoneNumber:
+        handler: lambdas/endpoints/accounts/RegisterPhoneNumber.handler
         events:
             - http:
-                  path: account/phone
-                  method: PUT
+                  path: account/phone/register
+                  method: POST
                   cors: true
+
+  verifyPhoneNumber:
+        handler: lambdas/endpoints/accounts/VerifyPhoneNumber.handler
+        events:
+            - http:
+                  path: account/phone/verify
+                  method: POST
+                  cors: true
+
   changePassword:
     handler: lambdas/endpoints/accounts/ChangePassword.handler
     events:
