@@ -1,9 +1,10 @@
-const jwt = require("jsonwebtoken");
 const Responses = require("../../../common/API_Responses");
 const Dynamo = require("../../../common/Dynamo");
-
+const dateUtils = require("../../../common/dates");
 const addTemperatureValue = async (accountName, value, measurement) => {
     const now = new Date();
+
+    const { weekYear, weekNum } = dateUtils.getWeekNumber(now);
     let record = {
         PK: `ACCOUNT#${accountName}`,
         SK: `#TEMPERATURE#${now.toISOString()}`,
@@ -11,6 +12,9 @@ const addTemperatureValue = async (accountName, value, measurement) => {
         day: now.getDate(),
         month: now.getMonth() + 1,
         year: now.getFullYear(),
+        weekYear: weekYear,
+        weekNum: weekNum,
+        week: `#YEAR#${weekYear}#WEEKNUM#${weekNum}`,
         value: value,
         measurement, measurement,
     }
