@@ -124,6 +124,24 @@ functions:
             path: temperature/{year}/{month}/{day}
             method: GET
             cors: true
+
+  GetTemperatureForMonth:
+    handler: lambdas/endpoints/sensors/temperature/GetTemperaturesForMonth.handler
+    events:
+      - http:
+            path: temperature/{year}/{month}
+            method: GET
+            cors: true
+
+
+  GetTemperatureForWeek:
+    handler: lambdas/endpoints/sensors/temperature/GetTemperaturesForWeek.handler
+    events:
+      - http:
+            path: temperature/week/{offset}
+            method: GET
+            cors: true
+
   sendSMS:
     handler: lambdas/endpoints/sms/sendSMS.handler
     events:
