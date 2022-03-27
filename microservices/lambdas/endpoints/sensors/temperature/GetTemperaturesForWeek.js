@@ -4,26 +4,14 @@ const dateUtils = require("../../../common/dates");
 const jwt = require("jsonwebtoken");
 
 
-const getWeekFromOffset = (offset) => {
-    const currentWeek = dateUtils.getWeekNumber(new Date());
-
-    let offsetYear = currentWeek.weekYear;
-    let offsetWeek = currentWeek.weekNum - offset;
-
-    if (offsetWeek < 1) {
-        offsetYear--;
-        offsetWeek += 52;
-    }
-
-    return { weekYear: offsetYear, weekNum: offsetWeek };
-}
-
 const getTemperaturesForWeek = async (accountName, weekYear, weekNum) => {
     params = {
         KeyConditionExpression: "PK = :pk  and begins_with (week, :week)",
+        FilterExpression: "begins_with(SK, :sensorType)",
         ExpressionAttributeValues: {
             ":pk": `ACCOUNT#${accountName}`,
             ":week": `#YEAR#${weekYear}#WEEKNUM#${weekNum}`,
+            ":sensorType": `#TEMPERATURE#`
         },
     }
     const items = await Dynamo.queryDocumentsIndex('PK-week-index', params);
@@ -42,7 +30,7 @@ exports.handler = async event => {
         const { accountName } = verification;
         const { offset } = event.pathParameters;
 
-        const { weekYear, weekNum } = getWeekFromOffset(offset);
+        const { weekYear, weekNum } = dateUtils.getWeekFromOffset(offset);
 
         items = await getTemperaturesForWeek(accountName, weekYear, weekNum);
 

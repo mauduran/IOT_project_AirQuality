@@ -33,10 +33,23 @@ const getWeekNumber = (d) => {
     return { weekYear: d.getUTCFullYear(), weekNum: weekNum };
 }
 
-
 const addHours = (date, hours) => {
     let newDate = date
     newDate.setHours(date.getHours() + hours);
+}
+
+const getWeekFromOffset = (offset) => {
+    const currentWeek = getWeekNumber(new Date());
+
+    let offsetYear = currentWeek.weekYear;
+    let offsetWeek = currentWeek.weekNum - offset;
+
+    if (offsetWeek < 1) {
+        offsetYear--;
+        offsetWeek += 52;
+    }
+
+    return { weekYear: offsetYear, weekNum: offsetWeek };
 }
 
 module.exports = {
@@ -46,4 +59,5 @@ module.exports = {
     addHours,
     getDateString,
     getWeekNumber,
+    getWeekFromOffset,
 }
