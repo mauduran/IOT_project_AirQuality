@@ -41,7 +41,7 @@ const storeHumidity = async (accountName, payload) => {
 }
 
 const storePM25 = async (accountName, payload) => {
-    await storeSensorData("pm25", accountName, payload);
+    await storeSensorData("pm2.5", accountName, payload);
 }
 const storePM10 = async (accountName, payload) => {
     await storeSensorData("pm10", accountName, payload);
