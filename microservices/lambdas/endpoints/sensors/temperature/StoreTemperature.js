@@ -15,6 +15,7 @@ const addTemperatureValue = async (accountName, value, measurement) => {
         weekYear: weekYear,
         weekNum: weekNum,
         week: `#YEAR#${weekYear}#WEEKNUM#${weekNum}`,
+        object_type: "TEMPERATURE",
         value: value,
         measurement, measurement,
     }
