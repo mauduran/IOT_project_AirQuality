@@ -121,6 +121,7 @@ functions:
             method: POST
             cors: true
             private: true
+  
   GetTemperatures:
     handler: lambdas/endpoints/sensors/temperature/GetTemperatures.handler
     events:
@@ -128,6 +129,7 @@ functions:
             path: temperature/
             method: GET
             cors: true
+  
   GetLastTemperature:
     handler: lambdas/endpoints/sensors/temperature/GetLastTemperature.handler
     events:
@@ -158,6 +160,54 @@ functions:
     events:
       - http:
             path: temperature/week/{offset}
+            method: GET
+            cors: true
+
+  StoreVOC:
+    handler: lambdas/endpoints/sensors/voc/StoreVOC.handler
+    events:
+      - http:
+            path: voc/
+            method: POST
+            cors: true
+            private: true
+  GetVOCs:
+    handler: lambdas/endpoints/sensors/voc/GetVOCs.handler
+    events:
+      - http:
+            path: voc/
+            method: GET
+            cors: true
+  GetLastVOC:
+    handler: lambdas/endpoints/sensors/voc/GetLastVOC.handler
+    events:
+      - http:
+            path: voc/most-recent
+            method: GET
+            cors: true
+
+  GetVOCsForDay:
+    handler: lambdas/endpoints/sensors/voc/GetVOCsForDay.handler
+    events:
+      - http:
+            path: voc/{year}/{month}/{day}
+            method: GET
+            cors: true
+
+  GetVOCsForMonth:
+    handler: lambdas/endpoints/sensors/voc/GetVOCsForMonth.handler
+    events:
+      - http:
+            path: voc/{year}/{month}
+            method: GET
+            cors: true
+
+
+  GetVOCsForWeek:
+    handler: lambdas/endpoints/sensors/voc/GetVOCsForWeek.handler
+    events:
+      - http:
+            path: voc/week/{offset}
             method: GET
             cors: true
 
