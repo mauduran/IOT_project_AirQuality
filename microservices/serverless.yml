@@ -103,7 +103,16 @@ functions:
             path: account/description
             method: PUT
             cors: true
-  
+
+
+  changeTitle:
+    handler: lambdas/endpoints/accounts/ChangeTitle.handler
+    events:
+      - http:
+            path: account/title
+            method: PUT
+            cors: true
+
   StoreTemperature:
     handler: lambdas/endpoints/sensors/temperature/StoreTemperature.handler
     events:
