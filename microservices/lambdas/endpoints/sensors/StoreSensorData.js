@@ -3,7 +3,7 @@ const Dynamo = require("../../common/Dynamo");
 const dateUtils = require("../../common/dates");
 const SENSOR_TYPES = require("../../common/SensorTypes");
 
-const addSensorValue = async (accountName, sensorType, value, measurement) => {
+const addSensorValue = async (accountName, sensorType, value, measurement, maxValue, level) => {
     const now = new Date();
 
     const { weekYear, weekNum } = dateUtils.getWeekNumber(now);
@@ -20,6 +20,8 @@ const addSensorValue = async (accountName, sensorType, value, measurement) => {
         object_type: sensorType,
         value: value,
         measurement, measurement,
+        maxValue: maxValue,
+        level: level,
     }
     return Dynamo.write(record);
 }
@@ -36,7 +38,7 @@ exports.handler = async event => {
         return Responses._400({ error: true, message: 'Invalid sensor type' });
     }
 
-    const { value, measurement, accountName } = body;
+    const { value, measurement, accountName, maxValue, level } = body;
 
     const numericValue = parseFloat(value);
 
@@ -45,7 +47,7 @@ exports.handler = async event => {
     }
 
     try {
-        await addSensorValue(accountName, SENSOR_TYPES[sensorType], numericValue, measurement);
+        await addSensorValue(accountName, SENSOR_TYPES[sensorType], numericValue, measurement, maxValue, level);
 
         return Responses._201({ success: true, message: `${SENSOR_TYPES[sensorType]} Stored` });
     } catch (error) {
