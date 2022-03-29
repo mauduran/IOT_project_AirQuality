@@ -1,0 +1,10 @@
+const AIR_QUALITY_MAX_LEVELS = {
+    CO2_MAX_VALUE: 15000,
+    VOC_MAX_VALUE: 150,
+    PM25_MAX_VALUE: 500,
+    PM10_MAX_VALUE: 600,
+}
+
+module.exports = {
+    AIR_QUALITY_MAX_LEVELS
+}
