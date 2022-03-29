@@ -34,7 +34,6 @@ exports.handler = async event => {
 
     try {
         await initializePhoneNumberRegistration(phoneNumber);
-        console.log(data);
         return Responses._200({ success: true, message: "Phone number register process started!" });
     } catch (error) {
         console.log(error);
