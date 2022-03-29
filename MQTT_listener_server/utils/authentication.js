@@ -18,5 +18,4 @@ const authenticate = async (accountName, password) => {
 
 }
 
-
 module.exports = { authenticate };
