@@ -1,5 +1,9 @@
 import AccountActionTypes from "./account.types";
 
+export const checkAccountSession = () => ({
+    type: AccountActionTypes.CHECK_ACCOUNT_SESSION
+});
+
 export const getAccountProfileStart = () => ({
     type: AccountActionTypes.GET_ACCOUNT_PROFILE_START,
 })
@@ -47,7 +51,7 @@ export const signUpStart = (userCredentials) => ({
     payload: userCredentials
 })
 
-export const signUpSuccess = ( response ) => ({
+export const signUpSuccess = (response) => ({
     type: AccountActionTypes.SIGN_UP_SUCCESS,
     payload: response
 })
@@ -62,7 +66,7 @@ export const changePasswordStart = (newAccountCredentials) => ({
     payload: newAccountCredentials
 })
 
-export const changePasswordSuccess = ( message ) => ({
+export const changePasswordSuccess = (message) => ({
     type: AccountActionTypes.CHANGE_PASSWORD_SUCCESS,
     payload: message
 })
@@ -77,7 +81,7 @@ export const changeTitleStart = (newTitle) => ({
     payload: newTitle
 })
 
-export const changeTitleSuccess = ( response ) => ({
+export const changeTitleSuccess = (response) => ({
     type: AccountActionTypes.CHANGE_TITLE_SUCCESS,
     payload: response
 })
@@ -92,7 +96,7 @@ export const changeDescriptionStart = (newDescription) => ({
     payload: newDescription
 })
 
-export const changeDescriptionSuccess = ( response ) => ({
+export const changeDescriptionSuccess = (response) => ({
     type: AccountActionTypes.CHANGE_TITLE_SUCCESS,
     payload: response
 })

@@ -206,7 +206,7 @@ export function* onGetAccountProfile() {
 }
 
 export function* onCheckAccountSession() {
-    yield takeLatest(AccountActionTypes.CHECK_USER_SESSION, isAccountAuthenticated)
+    yield takeLatest(AccountActionTypes.CHECK_ACCOUNT_SESSION, isAccountAuthenticated)
 }
 
 export function* onSignInStart() {
