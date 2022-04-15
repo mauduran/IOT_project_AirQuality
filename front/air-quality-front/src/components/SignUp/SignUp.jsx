@@ -22,7 +22,8 @@ const SignUp = ({ SignUpStart }) => {
             });
             return;
         }
-        // SignUpStart(accountName, password);
+
+        SignUpStart(accountName, title, password);
     }
 
     const handleChange = event => {
@@ -121,7 +122,7 @@ const SignUp = ({ SignUpStart }) => {
                     rules={[
                         {
                             required: true,
-                            message: 'Please input your Password!',
+                            message: 'Please confirm your password!',
                         },
                     ]}
                 >
@@ -149,7 +150,7 @@ const SignUp = ({ SignUpStart }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    SignUpStart: (accountname, password) => dispatch(signUpStart(accountname, password))
+    SignUpStart: (accountname, title, password) => dispatch(signUpStart(accountname, title, password))
 })
 
 export default connect(null, mapDispatchToProps)(SignUp)
