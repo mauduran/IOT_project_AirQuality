@@ -41,7 +41,13 @@ export function* getAccountProfile() {
             },
         });
 
-        yield put(getAccountProfileSuccess({ profile: response.account }));
+        const responseBody = yield response.json();
+
+        if (!responseBody.success) {
+            throw new Error(responseBody.message);
+        }
+        
+        yield put(getAccountProfileSuccess({ profile: responseBody.account }));
     } catch (error) {
         yield put(getAccountProfileFailure(error))
     }
