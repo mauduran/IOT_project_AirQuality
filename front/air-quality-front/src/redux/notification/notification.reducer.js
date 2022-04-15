@@ -6,7 +6,7 @@ const INITIAL_STATE = {
     severity: 'success',
     title: "Success"
 }
-const userReducer = (state = INITIAL_STATE, action) => {
+const notificationReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case NotificationActionTypes.CLOSE_NOTIFICATION:
             return {
@@ -36,4 +36,4 @@ const userReducer = (state = INITIAL_STATE, action) => {
     }
 }
 
-export default userReducer;
+export default notificationReducer;
