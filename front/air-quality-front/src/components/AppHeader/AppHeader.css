@@ -1,0 +1,23 @@
+.logo {
+    height: 100%;
+}
+
+.navbar {
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-main {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.nav-header {
+    margin: 0;
+    color: white;
+}
