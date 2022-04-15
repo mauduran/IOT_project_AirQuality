@@ -22,6 +22,12 @@ export const selectAccountToken = createSelector(
     (account) => account.currentAccount ? account.currentAccount.token : null
 );
 
+export const selecAccountHasPhoneRegistered = createSelector(
+    selectAccount,
+    (account) => account.currentAccount ? account.currentAccount.phone_number: null
+);
+
+
 export const selectIsLogged = createSelector(
     selectAccount,
     (account) => !!account.currentAccount
