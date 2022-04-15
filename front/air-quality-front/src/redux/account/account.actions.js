@@ -28,9 +28,9 @@ export const signInFailure = (error) => ({
     payload: error
 })
 
-export const signInStart = usernameAndPassword => ({
+export const signInStart = (accountName, password) => ({
     type: AccountActionTypes.SIGN_IN_START,
-    payload: usernameAndPassword
+    payload: { accountName, password }
 })
 
 export const signOutStart = () => ({

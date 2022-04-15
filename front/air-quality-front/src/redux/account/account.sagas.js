@@ -17,6 +17,7 @@ import {
     changeDescriptionFailure,
 
 } from './account.actions';
+import { notification } from 'antd';
 
 export function* isAccountAuthenticated() {
     try {
@@ -46,7 +47,7 @@ export function* getAccountProfile() {
         if (!responseBody.success) {
             throw new Error(responseBody.message);
         }
-        
+
         yield put(getAccountProfileSuccess({ profile: responseBody.account }));
     } catch (error) {
         yield put(getAccountProfileFailure(error))
@@ -98,7 +99,7 @@ export function* changeTitle({ payload: title }) {
             throw new Error(responseBody.message);
         }
 
-        yield put(changeTitleSuccess({message: responseBody.message, title}));
+        yield put(changeTitleSuccess({ message: responseBody.message, title }));
     } catch (error) {
 
         yield put(changeTitleFailure(error));
@@ -124,7 +125,7 @@ export function* changeDescription({ payload: description }) {
             throw new Error(responseBody.message);
         }
 
-        yield put(changeDescriptionSuccess({message: responseBody.message, description}));
+        yield put(changeDescriptionSuccess({ message: responseBody.message, description }));
     } catch (error) {
         yield put(changeDescriptionFailure(error));
     }
@@ -132,6 +133,7 @@ export function* changeDescription({ payload: description }) {
 
 export function* signIn({ payload: { accountName, password } }) {
     const body = { accountName, password };
+    console.log(accountName + " " + password);
     try {
         const response = yield fetch("/account/login", {
             method: 'POST',
@@ -152,8 +154,13 @@ export function* signIn({ payload: { accountName, password } }) {
 
         yield put(signInSuccess({ token, accountName }));
     } catch (error) {
-
-        yield put(signInFailure(error));
+        notification.error({
+            key: "incorrect credentials",
+            message: 'Error Logging in',
+            description: error.message,
+            duration: 5,
+        });
+        yield put(signInFailure(error.message));
     }
 }
 
