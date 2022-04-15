@@ -9,7 +9,7 @@ import './App.css';
 import { checkAccountSession } from './redux/account/account.actions';
 import RequireAuth from './common/RequireAuth';
 import RequireUnAuth from './common/RequireUnAuth';
-import Home from './containers/Home/Home';
+import Dashboard from './containers/Dashboard/Dashboard';
 import SignInAndSignUp from './containers/SignInAndSignUp/SignInAndSignUp';
 import AppHeader from './components/AppHeader/AppHeader';
 import { selectCurrentAccountName, selectIsLogged } from './redux/account/account.selectors';
@@ -47,11 +47,11 @@ function App({ checkAccountSession, isLoggedIn, accountName }) {
               </Menu.Item>
             </Menu>
           </Sider>}
-          <Content style={{ backgroundColor: "lightgray" }}>
+          <Content style={{ backgroundColor: "lightgray", overflowY: "auto" }}>
             <Routes>
               <Route path='/' element={<Navigate to="/dashboard" />} />
-              <Route path='/dashboard' element={<RequireAuth><Home /></RequireAuth>} />
-              <Route exact path='/account' element={<RequireAuth> Account Details </RequireAuth>} />
+              <Route path='/dashboard' element={<RequireAuth><Dashboard /></RequireAuth>} />
+              <Route exact path='/account-info' element={<RequireAuth> Account Details </RequireAuth>} />
               <Route exact path='/signin' element={<RequireUnAuth> <SignInAndSignUp /> </RequireUnAuth>} />
               <Route path="*" element={<Navigate to="/404" />} />
               <Route path="/404" element={<h1>404 - Nothing to see here</h1>} />
