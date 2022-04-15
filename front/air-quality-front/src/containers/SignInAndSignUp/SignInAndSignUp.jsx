@@ -1,12 +1,13 @@
 import React from 'react'
+import SignIn from '../../components/SignIn/SignIn';
+import SignUp from '../../components/SignUp/SignUp';
 import './SignInAndSignUp.css';
 
 const SignInAndSignUp = () => {
     return (
         <div className='sign-in-and-sign-up'>
-            <h1>sign In and Sign Up</h1>
-            {/* <SignIn/>
-            <SignUp/> */}
+            <SignIn />
+            <SignUp />
         </div>
     )
 }
