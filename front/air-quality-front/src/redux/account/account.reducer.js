@@ -5,6 +5,7 @@ const INITIAL_STATE = {
     currentAccount: null,
     profile: null,
     successMessage: null,
+    fetchingAccount: false,
 }
 
 const accountReducer = (state = INITIAL_STATE, action) => {
@@ -47,14 +48,24 @@ const accountReducer = (state = INITIAL_STATE, action) => {
                 error: null,
                 successMessage: action.payload
             }
-        
+
         case AccountActionTypes.GET_ACCOUNT_PROFILE_SUCCESS:
             return {
-                ...state, 
+                ...state,
                 error: null,
                 successMessage: null,
                 profile: action.payload,
+                fetchingAccount: false,
             }
+
+        case AccountActionTypes.GET_ACCOUNT_PROFILE_START:
+            return {
+                ...state,
+                error: null,
+                successMessage: null,
+                fetchingAccount: true,
+            }
+
 
         case AccountActionTypes.SIGN_IN_FAILURE:
         case AccountActionTypes.SIGN_OUT_FAILURE:
@@ -67,6 +78,7 @@ const accountReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 error: action.payload,
                 successMessage: null,
+                fetchingAccount: false,
             }
         default: return state;
     }
