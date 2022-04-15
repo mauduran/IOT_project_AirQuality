@@ -173,14 +173,14 @@ export function* signOut() {
     }
 }
 
-export function* signUp({ payload: { accountName, password, title, description } }) {
+export function* signUp({ payload: { accountName, password, title } }) {
     try {
         const response = yield fetch("/account", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ accountName, password, title, description }),
+            body: JSON.stringify({ accountName, password, title }),
         })
 
         const responseBody = yield response.json();
@@ -192,6 +192,12 @@ export function* signUp({ payload: { accountName, password, title, description }
         yield put(signUpSuccess({ accountName, password }));
 
     } catch (error) {
+        notification.error({
+            key: "error registering ",
+            message: 'Error Signing Up',
+            description: error.message,
+            duration: 5,
+        });
         yield put(signUpFailure(error))
     }
 }

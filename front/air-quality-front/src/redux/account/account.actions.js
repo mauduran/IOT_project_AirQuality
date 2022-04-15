@@ -46,9 +46,9 @@ export const signOutFailure = (error) => ({
     payload: error
 })
 
-export const signUpStart = (userCredentials) => ({
+export const signUpStart = (accountName, title, password) => ({
     type: AccountActionTypes.SIGN_UP_START,
-    payload: userCredentials
+    payload: { accountName, title, password }
 })
 
 export const signUpSuccess = (response) => ({
