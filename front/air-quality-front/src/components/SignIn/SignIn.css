@@ -1,0 +1,24 @@
+.sign-in {
+    margin: 30px;
+    padding: 30px;
+    background-color: whitesmoke;
+    max-width: 90%;
+    width: 500px;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.sign-in .title {
+    margin: 10px 0;
+    font-size: 48px;
+}
+
+.sign-in form {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
