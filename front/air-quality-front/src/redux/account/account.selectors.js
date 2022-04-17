@@ -7,6 +7,11 @@ export const selectAccountProfile = createSelector(
     (account) => account.profile
 );
 
+export const selectIsFetchingAccount = createSelector(
+    selectAccount,
+    (account) => account.fetchingAccount
+);
+
 export const selectCurrentAccountName = createSelector(
     selectAccount,
     (account) => account.currentAccount ? account.currentAccount.accountName: null
@@ -26,7 +31,6 @@ export const selecAccountHasPhoneRegistered = createSelector(
     selectAccount,
     (account) => account.currentAccount ? account.currentAccount.phone_number: null
 );
-
 
 export const selectIsLogged = createSelector(
     selectAccount,
