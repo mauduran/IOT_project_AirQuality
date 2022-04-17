@@ -54,7 +54,7 @@ const accountReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 error: null,
                 successMessage: null,
-                profile: action.payload,
+                profile: action.payload.profile,
                 fetchingAccount: false,
             }
 
