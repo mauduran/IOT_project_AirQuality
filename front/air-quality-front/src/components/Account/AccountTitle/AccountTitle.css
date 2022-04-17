@@ -1,0 +1,8 @@
+.account-title {
+    margin-left: 15px;
+}
+.input-title {
+    width: fit-content;
+    box-sizing: content-box;
+    margin: 0 15px;
+}
