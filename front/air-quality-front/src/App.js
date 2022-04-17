@@ -13,6 +13,7 @@ import Dashboard from './containers/Dashboard/Dashboard';
 import SignInAndSignUp from './containers/SignInAndSignUp/SignInAndSignUp';
 import AppHeader from './components/AppHeader/AppHeader';
 import { selectCurrentAccountName, selectIsLogged } from './redux/account/account.selectors';
+import Account from './containers/Account/Account';
 
 const { Sider, Content } = Layout;
 
@@ -51,7 +52,7 @@ function App({ checkAccountSession, isLoggedIn, accountName }) {
             <Routes>
               <Route path='/' element={<Navigate to="/dashboard" />} />
               <Route path='/dashboard' element={<RequireAuth><Dashboard /></RequireAuth>} />
-              <Route exact path='/account-info' element={<RequireAuth> Account Details </RequireAuth>} />
+              <Route exact path='/account' element={<RequireAuth><Account/></RequireAuth>} />
               <Route exact path='/signin' element={<RequireUnAuth> <SignInAndSignUp /> </RequireUnAuth>} />
               <Route path="*" element={<Navigate to="/404" />} />
               <Route path="/404" element={<h1>404 - Nothing to see here</h1>} />
