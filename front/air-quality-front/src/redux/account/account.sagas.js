@@ -80,7 +80,7 @@ export function* changePassword({ payload: currentPassword, newPassword }) {
     }
 }
 
-export function* changeTitle({ payload: title }) {
+export function* changeTitle({ payload: { title } }) {
     const body = { title };
 
     try {
@@ -101,12 +101,17 @@ export function* changeTitle({ payload: title }) {
 
         yield put(changeTitleSuccess({ message: responseBody.message, title }));
     } catch (error) {
-
+        notification.error({
+            key: "unable to change title",
+            message: 'Could not change account title.',
+            description: error.message,
+            duration: 5,
+        });
         yield put(changeTitleFailure(error));
     }
 }
 
-export function* changeDescription({ payload: description }) {
+export function* changeDescription({ payload: { description } }) {
     const body = { description };
 
     try {
@@ -127,6 +132,12 @@ export function* changeDescription({ payload: description }) {
 
         yield put(changeDescriptionSuccess({ message: responseBody.message, description }));
     } catch (error) {
+        notification.error({
+            key: "unable to change description",
+            message: 'Could not change account description.',
+            description: error.message,
+            duration: 5,
+        });
         yield put(changeDescriptionFailure(error));
     }
 }
