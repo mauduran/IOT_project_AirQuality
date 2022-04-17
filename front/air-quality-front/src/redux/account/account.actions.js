@@ -78,7 +78,7 @@ export const changePasswordFailure = (error) => ({
 
 export const changeTitleStart = (newTitle) => ({
     type: AccountActionTypes.CHANGE_TITLE_START,
-    payload: newTitle
+    payload: { title: newTitle }
 })
 
 export const changeTitleSuccess = (response) => ({
@@ -92,16 +92,16 @@ export const changeTitleFailure = (error) => ({
 })
 
 export const changeDescriptionStart = (newDescription) => ({
-    type: AccountActionTypes.CHANGE_TITLE_START,
-    payload: newDescription
+    type: AccountActionTypes.CHANGE_DESCRIPTION_START,
+    payload: { description: newDescription }
 })
 
 export const changeDescriptionSuccess = (response) => ({
-    type: AccountActionTypes.CHANGE_TITLE_SUCCESS,
+    type: AccountActionTypes.CHANGE_DESCRIPTION_SUCCESS,
     payload: response
 })
 
 export const changeDescriptionFailure = (error) => ({
-    type: AccountActionTypes.CHANGE_TITLE_FAILURE,
+    type: AccountActionTypes.CHANGE_DESCRIPTION_FAILURE,
     payload: error
 })
