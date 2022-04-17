@@ -44,7 +44,7 @@ const AccountDescription = ({ description, changeDescription }) => {
                             </Tooltip>
                             <TextArea
                                 autoSize={{ minRows: 1, maxRows: 6 }}
-                                style={{ fontSize: "18px", marginLeft: "10px"  }}
+                                style={{ fontSize: "22px", marginLeft: "10px"  }}
                                 rows={1}
                                 onChange={handleDescriptionInputChange}
                                 value={newDescription} />
@@ -54,7 +54,7 @@ const AccountDescription = ({ description, changeDescription }) => {
                                 <Button style={{ background: "#011529", borderColor:"#011529"}} onClick={() => setisEditable(true)} type="primary" shape="circle" icon={<EditFilled />} />
                             </Tooltip>
 
-                            <Text style={{ fontSize: "18px", marginLeft: "10px" }}>
+                            <Text style={{ fontSize: "22px", marginLeft: "10px" }}>
                                 {newDescription}
                             </Text>
                         </>
