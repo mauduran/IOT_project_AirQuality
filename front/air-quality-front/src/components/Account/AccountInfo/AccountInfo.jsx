@@ -13,7 +13,7 @@ import './AccountInfo.css';
 
 const AccountInfo = ({ accountProfile }) => {
     if (accountProfile) {
-        const { accountName, title, description } = accountProfile;
+        const { accountName, title, description, phone_number } = accountProfile;
         return (
             <div className='account-info-container'>
                 <div className='account-header'>
@@ -21,7 +21,7 @@ const AccountInfo = ({ accountProfile }) => {
                 </div>
                 <AccountTitle title={title} />
                 <AccountDescription description={description} />
-                <AccountPhone />
+                <AccountPhone phoneNumber={phone_number} />
                 <ChangePasswordForm />
             </div>
         )
