@@ -9,5 +9,15 @@ export const selectPhoneNumber = createSelector(
 
 export const selectIsWaitingForVerification = createSelector(
     selectPhone,
-    (phone)=> phone.waitingForVerification
-)
+    (phone) => phone.waitingForVerification
+);
+
+export const selectIsRegisteringPhone = createSelector(
+    selectPhone,
+    (phone) => phone.registeringPhone
+);
+
+export const selectIsVerifyingCode = createSelector(
+    selectPhone,
+    (phone) => phone.verifyingCode
+);
