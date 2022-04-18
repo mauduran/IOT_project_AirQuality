@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
+import { Route, Routes, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import Title from 'antd/lib/typography/Title';
 
@@ -22,6 +22,7 @@ function App({ checkAccountSession, isLoggedIn, accountName }) {
     checkAccountSession();
   }, [checkAccountSession]);
 
+  const location = useLocation();
   const navigate = useNavigate();
 
   return (
@@ -32,7 +33,8 @@ function App({ checkAccountSession, isLoggedIn, accountName }) {
           {isLoggedIn && <Sider width="256px">
             <Menu
               style={{ width: 256 }}
-              defaultSelectedKeys={['dashboard']}
+              selectedKeys={location.pathname}
+              defaultSelectedKeys={["/dashboard"]}
               mode="inline"
               theme="dark"
             >
@@ -40,10 +42,10 @@ function App({ checkAccountSession, isLoggedIn, accountName }) {
                 <Title style={{ color: 'white', padding: "15px", margin: 0 }} level={4}>{accountName}</Title>
               </Menu.Item>
 
-              <Menu.Item key='dashboard' onClick={() => navigate("/dashboard")} >
+              <Menu.Item key='/dashboard' onClick={() => navigate("/dashboard")} >
                 Dashboard
               </Menu.Item>
-              <Menu.Item key='account' onClick={() => navigate("/account")}>
+              <Menu.Item key='/account' onClick={() => navigate("/account")}>
                 Account Details
               </Menu.Item>
             </Menu>
@@ -52,7 +54,7 @@ function App({ checkAccountSession, isLoggedIn, accountName }) {
             <Routes>
               <Route path='/' element={<Navigate to="/dashboard" />} />
               <Route path='/dashboard' element={<RequireAuth><Dashboard /></RequireAuth>} />
-              <Route exact path='/account' element={<RequireAuth><Account/></RequireAuth>} />
+              <Route exact path='/account' element={<RequireAuth><Account /></RequireAuth>} />
               <Route exact path='/signin' element={<RequireUnAuth> <SignInAndSignUp /> </RequireUnAuth>} />
               <Route path="*" element={<Navigate to="/404" />} />
               <Route path="/404" element={<h1>404 - Nothing to see here</h1>} />
