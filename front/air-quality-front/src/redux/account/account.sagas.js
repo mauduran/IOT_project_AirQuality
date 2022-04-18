@@ -54,7 +54,7 @@ export function* getAccountProfile() {
     }
 }
 
-export function* changePassword({ payload: currentPassword, newPassword }) {
+export function* changePassword({ payload: { currentPassword, newPassword } }) {
     const body = { currentPassword, newPassword };
 
     try {
@@ -72,10 +72,20 @@ export function* changePassword({ payload: currentPassword, newPassword }) {
         if (!responseBody.success) {
             throw new Error(responseBody.message);
         }
-
+        notification.success({
+            key: "ChangedPassword",
+            message: 'Success!',
+            description: "Successfully changed account password.",
+            duration: 5,
+        });
         yield put(changePasswordSuccess(responseBody.message));
     } catch (error) {
-
+        notification.error({
+            key: "unable to change password",
+            message: 'Could not change account password.',
+            description: error.message,
+            duration: 5,
+        });
         yield put(changePasswordFailure(error));
     }
 }
