@@ -12,7 +12,6 @@ const SignUp = ({ SignUpStart }) => {
     const { accountName, password, title, confirmPassword } = accountCredentials;
 
     const handleSubmit = () => {
-        console.log(`${accountName} ${title} ${password} ${confirmPassword}`)
         if (password !== confirmPassword) {
             notification.error({
                 key: "passwordsDontMatch",
