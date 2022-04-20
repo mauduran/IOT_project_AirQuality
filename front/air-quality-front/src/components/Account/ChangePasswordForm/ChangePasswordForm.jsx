@@ -132,7 +132,7 @@ const ChangePasswordForm = ({ ChangePasswordStart }) => {
                             Change Password
                         </Button>
                     </Form.Item>
-                </Form>˝
+                </Form>
             </div>
         </>
     )
