@@ -22,119 +22,148 @@ const INITIAL_STATE = {
 }
 
 const sensorsReducer = (state = INITIAL_STATE, action) => {
-    let sensorObj = null;
     switch (action.type) {
-        case SensorsActionTypes.GET_DAILY_SENSOR_DATA_START:
-            sensorObj = state[action.payload.sensorType];
-            sensorObj.fetchingDailySensorData = true;
+        case SensorsActionTypes.GET_DAILY_SENSOR_DATA_START: {
             return {
                 ...state,
-                [action.payload.sensorType]: sensorObj,
+                [action.payload.sensorType]: {
+                    ...state[action.payload.sensorType],
+                    fetchingDailySensorData: true,
+                },
                 error: null
             }
+        }
 
-        case SensorsActionTypes.GET_WEEKLY_SENSOR_DATA_START:
-            sensorObj = state[action.payload.sensorType];
-            sensorObj.fetchingWeeklySensorData = true;
+        case SensorsActionTypes.GET_WEEKLY_SENSOR_DATA_START: {
             return {
                 ...state,
-                [action.payload.sensorType]: sensorObj,
+                [action.payload.sensorType]: {
+                    ...state[action.payload.sensorType],
+                    fetchingWeeklySensorData: true,
+                },
                 error: null
             }
-        case SensorsActionTypes.GET_MONTHLY_SENSOR_DATA_START:
-            sensorObj = state[action.payload.sensorType];
+        }
+
+        case SensorsActionTypes.GET_MONTHLY_SENSOR_DATA_START: {
+            const sensorObj = state[action.payload.sensorType];
             sensorObj.fetchingMonthlySensorData = true;
             return {
                 ...state,
-                [action.payload.sensorType]: sensorObj,
+                [action.payload.sensorType]: {
+                    ...state[action.payload.sensorType],
+                    fetchingMonthlySensorData: true,
+                },
                 error: null
             }
+        }
 
-        case SensorsActionTypes.GET_LAST_SENSOR_DATA_START:
-            sensorObj = state[action.payload.sensorType];
-            sensorObj.fetchingLastSensorData = true;
+        case SensorsActionTypes.GET_LAST_SENSOR_DATA_START: {
             return {
                 ...state,
-                [action.payload.sensorType]: sensorObj,
+                [action.payload.sensorType]: {
+                    ...state[action.payload.sensorType],
+                    fetchingLastSensorData: true,
+                },
                 error: null
             }
+        }
 
-        case SensorsActionTypes.GET_DAILY_SENSOR_DATA_SUCCESS:
-            sensorObj = state[action.payload.sensorType];
-            sensorObj.fetchingDailySensorData = false;
-            sensorObj.dailySensorData = action.payload.sensorData;
+        case SensorsActionTypes.GET_DAILY_SENSOR_DATA_SUCCESS: {
             return {
                 ...state,
-                [action.payload.sensorType]: sensorObj,
+                [action.payload.sensorType]: {
+                    ...state[action.payload.sensorType],
+                    fetchingDailySensorData: false,
+                    dailySensorData: action.payload.sensorData,
+                },
                 error: null
             }
-        case SensorsActionTypes.GET_WEEKLY_SENSOR_DATA_SUCCESS:
-            sensorObj = state[action.payload.sensorType];
-            sensorObj.fetchingWeeklySensorData = false;
-            sensorObj.weeklySensorData = action.payload.sensorData;
-            return {
-                ...state,
-                [action.payload.sensorType]: sensorObj,
-                error: null
-            }
+        }
 
-        case SensorsActionTypes.GET_MONTHLY_SENSOR_DATA_SUCCESS:
-            sensorObj = state[action.payload.sensorType];
-            sensorObj.fetchingMonthlySensorData = false;
-            sensorObj.monthlySensorData = action.payload.sensorData;
+        case SensorsActionTypes.GET_WEEKLY_SENSOR_DATA_SUCCESS: {
             return {
                 ...state,
-                [action.payload.sensorType]: sensorObj,
+                [action.payload.sensorType]: {
+                    ...state[action.payload.sensorType],
+                    fetchingWeeklySensorData: false,
+                    weeklySensorData: action.payload.sensorData,
+                },
                 error: null
             }
-        case SensorsActionTypes.GET_LAST_SENSOR_DATA_SUCCESS:
-            sensorObj = state[action.payload.sensorType];
-            sensorObj.fetchingLastSensorData = false;
-            sensorObj.lastSensorData = action.payload.sensorData;
-            return {
-                ...state,
-                [action.payload.sensorType]: sensorObj,
-                error: null
-            }
+        }
 
-        case SensorsActionTypes.GET_DAILY_SENSOR_DATA_FAILURE:
-            sensorObj = state[action.payload.sensorType];
-            sensorObj.fetchingDailySensorData = false;
-            sensorObj.dailySensorData = null;
+        case SensorsActionTypes.GET_MONTHLY_SENSOR_DATA_SUCCESS: {
             return {
                 ...state,
-                [action.payload.sensorType]: sensorObj,
+                [action.payload.sensorType]: {
+                    ...state[action.payload.sensorType],
+                    fetchingMonthlySensorData: false,
+                    monthlySensorData: action.payload.sensorData,
+                },
+                error: null
+            }
+        }
+
+        case SensorsActionTypes.GET_LAST_SENSOR_DATA_SUCCESS: {
+            return {
+                ...state,
+                [action.payload.sensorType]: {
+                    ...state[action.payload.sensorType],
+                    fetchingLastSensorData: false,
+                    lastSensorData: action.payload.sensorData,
+                },
+                error: null
+            }
+        }
+
+        case SensorsActionTypes.GET_DAILY_SENSOR_DATA_FAILURE: {
+            return {
+                ...state,
+                [action.payload.sensorType]: {
+                    ...state[action.payload.sensorType],
+                    fetchingDailySensorData: false,
+                    dailySensorData: null,
+                },
                 error: action.payload.error
             }
+        }
 
-        case SensorsActionTypes.GET_WEEKLY_SENSOR_DATA_FAILURE:
-            sensorObj = state[action.payload.sensorType];
-            sensorObj.fetchingWeeklySensorData = false;
-            sensorObj.weeklySensorData = null;
+        case SensorsActionTypes.GET_WEEKLY_SENSOR_DATA_FAILURE: {
             return {
                 ...state,
-                [action.payload.sensorType]: sensorObj,
+                [action.payload.sensorType]: {
+                    ...state[action.payload.sensorType],
+                    fetchingWeeklySensorData: false,
+                    weeklySensorData: null,
+                },
                 error: action.payload.error
             }
-        case SensorsActionTypes.GET_MONTHLY_SENSOR_DATA_FAILURE:
-            sensorObj = state[action.payload.sensorType];
-            sensorObj.fetchingMonthlySensorData = false;
-            sensorObj.monthlySensorData = null;
-            return {
-                ...state,
-                [action.payload.sensorType]: sensorObj,
-                error: action.payload.error
-            }
+        }
 
-        case SensorsActionTypes.GET_LAST_SENSOR_DATA_FAILURE:
-            sensorObj = state[action.payload.sensorType];
-            sensorObj.fetchingLastSensorData = false;
-            sensorObj.lastSensorData = null;
+        case SensorsActionTypes.GET_MONTHLY_SENSOR_DATA_FAILURE: {
             return {
                 ...state,
-                [action.payload.sensorType]: sensorObj,
+                [action.payload.sensorType]: {
+                    ...state[action.payload.sensorType],
+                    fetchingMonthlySensorData: false,
+                    monthlySensorData: null,
+                },
                 error: action.payload.error
             }
+        }
+
+        case SensorsActionTypes.GET_LAST_SENSOR_DATA_FAILURE: {
+            return {
+                ...state,
+                [action.payload.sensorType]: {
+                    ...state[action.payload.sensorType],
+                    fetchingLastSensorData: false,
+                    lastSensorData: null,
+                },
+                error: action.payload.error
+            }
+        }
 
         default: return state;
     }
