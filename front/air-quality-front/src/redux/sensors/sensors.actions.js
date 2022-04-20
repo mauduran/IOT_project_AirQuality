@@ -2,7 +2,7 @@ import SensorsActionTypes from './sensors.types';
 
 export const getLastSensorDataStart = (sensorType) => ({
     type: SensorsActionTypes.GET_LAST_SENSOR_DATA_START,
-    payload: sensorType
+    payload: { sensorType }
 });
 
 export const getLastSensorDataSuccess = (sensorType, sensorData) => ({
