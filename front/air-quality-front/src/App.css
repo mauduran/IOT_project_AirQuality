@@ -38,11 +38,11 @@
 }
 
 .ant-statistic-title {
-    font-size: 32px;
+    font-size: 26px;
 }
 
 .ant-statistic-content {
-    font-size: 60px;
+    font-size: 48px;
 }
 
 .ant-statistic-content-value {
@@ -50,7 +50,7 @@
 }
 
 .ant-spin-lg .ant-spin-dot {
-    font-size: 64px;
+    font-size: 48px;
 }
 
 .ant-spin-lg .ant-spin-dot-item {
