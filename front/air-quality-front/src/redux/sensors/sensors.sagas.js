@@ -1,4 +1,4 @@
-import { takeLatest, put, all, call } from 'redux-saga/effects';
+import { takeLatest, put, all, call, takeEvery } from 'redux-saga/effects';
 import SENSOR_TYPES from '../../constants/SensorTypes';
 import { getDailySensorDataFailed, getDailySensorDataSuccess, getLastSensorDataFailed, getLastSensorDataSuccess, getMonthlySensorDataFailed, getMonthlySensorDataSuccess, getWeeklySensorDataFailed, getWeeklySensorDataSuccess } from './sensors.actions';
 
@@ -105,7 +105,7 @@ export function* getMonthlySensorData({ payload: sensorType, year, month }) {
 }
 
 export function* onGetLastSensorData() {
-    yield takeLatest(SensorsActionTypes.GET_LAST_SENSOR_DATA_START, getLastSensorData)
+    yield takeEvery(SensorsActionTypes.GET_LAST_SENSOR_DATA_START, getLastSensorData)
 }
 
 export function* onGetDailySensorData() {
