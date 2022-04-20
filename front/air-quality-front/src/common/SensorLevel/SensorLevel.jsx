@@ -26,7 +26,7 @@ const SensorLevel = ({ sensorType, sensorData, isLoading }) => {
                         </>
                     )}
                     strokeColor={RiskLevelColors[data.level]}
-                    width={180}
+                    width={150}
                     strokeWidth={8}
                     trailColor="#bebebe"
                 />
