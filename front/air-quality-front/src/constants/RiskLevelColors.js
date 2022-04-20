@@ -1,10 +1,10 @@
 const RiskLevelColors = {
-    GOOD: "green-6",
-    MODERATE: "yellow-5",
-    UNHEALTHY_FOR_SENSITIVE_GROUPS: "orange-5",
-    UNHEALTHY: "volcano-6",
-    VERY_UNHEALTHY: "magenta-6",
-    HAZARDOUS: "red-9",
+    GOOD: "#52c41a",
+    MODERATE: "#ffec3d",
+    UNHEALTHY_FOR_SENSITIVE_GROUPS: "#ffa940",
+    UNHEALTHY: "#fa541c",
+    VERY_UNHEALTHY: "#eb2f96",
+    HAZARDOUS: "#820014",
 }
 
 export default RiskLevelColors;
