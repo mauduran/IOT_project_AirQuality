@@ -7,4 +7,14 @@ const ALERT_LEVELS = {
     HAZARDOUS: "HAZARDOUS",
 }
 
+export const ALERT_LEVELS_TEXT = {
+    GOOD: "Good",
+    MODERATE: "Moderate",
+    UNHEALTHY_FOR_SENSITIVE_GROUPS: "Unhealthy for sensitive groups",
+    UNHEALTHY: "Unhealthy",
+    VERY_UNHEALTHY: "Very Unhealthy",
+    HAZARDOUS: "Hazardous",
+}
+
+
 export default ALERT_LEVELS;
