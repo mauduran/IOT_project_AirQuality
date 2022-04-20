@@ -16,7 +16,7 @@ const AccountInfo = ({ accountProfile }) => {
         const { accountName, title, description, phone_number } = accountProfile;
         return (
             <div className='account-info-container'>
-                <div className='account-header'>
+                <div className='page-header'>
                     <Title style={{ fontSize: "48px", margin: 0, color: "white" }} level={1}>Account: {accountName}</Title>
                 </div>
                 <AccountTitle title={title} />
