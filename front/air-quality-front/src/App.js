@@ -6,7 +6,7 @@ import { Layout, Menu } from 'antd';
 import Title from 'antd/lib/typography/Title';
 
 import './App.css';
-import { checkAccountSession } from './redux/account/account.actions';
+import { checkAccountSession, getAccountProfileStart } from './redux/account/account.actions';
 import RequireAuth from './common/RequireAuth';
 import RequireUnAuth from './common/RequireUnAuth';
 import Dashboard from './containers/Dashboard/Dashboard';
@@ -17,10 +17,17 @@ import Account from './containers/Account/Account';
 
 const { Sider, Content } = Layout;
 
-function App({ checkAccountSession, isLoggedIn, accountName }) {
+function App({ checkAccountSession, isLoggedIn, accountName, fetchAccountProfile }) {
   useEffect(() => {
     checkAccountSession();
   }, [checkAccountSession]);
+
+  useEffect(() => {
+    if (isLoggedIn)
+      fetchAccountProfile();
+
+  }, [isLoggedIn, fetchAccountProfile])
+
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -68,6 +75,7 @@ function App({ checkAccountSession, isLoggedIn, accountName }) {
 
 const mapDispatchToProps = dispatch => ({
   checkAccountSession: () => dispatch(checkAccountSession()),
+  fetchAccountProfile: () => dispatch(getAccountProfileStart()),
 });
 
 const mapStateToProps = createStructuredSelector({
