@@ -4,7 +4,7 @@ import { getDailySensorDataFailed, getDailySensorDataSuccess, getLastSensorDataF
 
 import SensorsActionTypes from './sensors.types';
 
-export function* getLastSensorData(sensorType) {
+export function* getLastSensorData({ payload: { sensorType } }) {
     try {
         if (!(sensorType in SENSOR_TYPES))
             throw new Error("Could not fetch sensor data. Invalid sensor type.");
