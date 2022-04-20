@@ -1,35 +1,53 @@
 import { Col, Row } from 'antd';
-import React from 'react'
+import Title from 'antd/lib/typography/Title';
+import React from 'react';
 import { connect } from 'react-redux';
+import TemperatureMonitor from '../../components/Monitors/TemperatureMonitor/TemperatureMonitor';
+import { msToMinutes } from '../../utils/time.utils';
 
 const Dashboard = () => {
-
+    const fetchInterval = msToMinutes(1);
     return (
         <div className="Dashboard">
-            <h1 className="title">HOME</h1>
-            <Row gutter={[24, 24]} justify="space-evenly" style={{width: "95%", margin: "10px auto"}}>
-                <Col xs={24} sm={24} md={12} lg={8} xl={6}>
-                    <div style={{ background: "blue", height: "300px", width: "100%" }} />
-                </Col>
-                <Col xs={24} sm={24} md={12} lg={8} xl={6}>
-                    <div style={{ background: "blue", height: "300px", width: "100%" }} />
-                </Col>
-                <Col xs={24} sm={24} md={12} lg={8} xl={6}>
-                    <div style={{ background: "blue", height: "300px", width: "100%" }} />
-                </Col>
-                <Col xs={24} sm={24} md={12} lg={8} xl={6}>
-                    <div style={{ background: "blue", height: "300px", width: "100%" }} />
-                </Col>
-                <Col xs={24} sm={24} md={12} lg={8} xl={6}>
-                    <div style={{ background: "blue", height: "300px", width: "100%" }} />
-                </Col>
-                <Col xs={24} sm={24} md={12} lg={8} xl={6}>
-                    <div style={{ background: "blue", height: "300px", width: "100%" }} />
-                </Col>
-            </Row>
+            <div className='page-header'>
+                    <Title style={{ fontSize: "48px", margin: 0, color: "white" }} level={1}>Dashboard</Title>
+                </div>
 
-        
-        </div>
+            <div style={{ margin: "10px auto", width: "94%" }}>
+                <Row gutter={[24, 24]} justify="space-evenly">
+                    <Col xs={24} sm={24} md={12} lg={8} xl={6}>
+                        <TemperatureMonitor delay={fetchInterval} temperatureValue={36.5}/>
+                    </Col>
+                    <Col xs={24} sm={24} md={12} lg={8} xl={6}>
+                        <div style={{ background: "blue", height: "300px", width: "100%" }}>
+                            Humidity
+                        </div>
+                    </Col>
+                    <Col xs={24} sm={24} md={12} lg={8} xl={6}>
+                        <div style={{ background: "blue", height: "300px", width: "100%" }}>
+                            CO2
+                        </div>
+                    </Col>
+                    <Col xs={24} sm={24} md={12} lg={8} xl={6}>
+                        <div style={{ background: "blue", height: "300px", width: "100%" }}>
+                            VOC
+                        </div>
+                    </Col>
+                    <Col xs={24} sm={24} md={12} lg={8} xl={6}>
+                        <div style={{ background: "blue", height: "300px", width: "100%" }}>
+                            PM2.5
+                        </div>
+                    </Col>
+                    <Col xs={24} sm={24} md={12} lg={8} xl={6}>
+                        <div style={{ background: "blue", height: "300px", width: "100%" }}>
+                            PM10
+                        </div>
+                    </Col>
+                </Row>
+            </div>
+
+
+        </div >
     )
 }
 
