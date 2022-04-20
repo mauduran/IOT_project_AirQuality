@@ -50,7 +50,7 @@ function App({ checkAccountSession, isLoggedIn, accountName }) {
               </Menu.Item>
             </Menu>
           </Sider>}
-          <Content style={{ backgroundColor: "lightgray", overflowY: "auto" }}>
+          <Content style={{ overflowY: "auto", backgroundColor: "#ddd" }}>
             <Routes>
               <Route path='/' element={<Navigate to="/dashboard" />} />
               <Route path='/dashboard' element={<RequireAuth><Dashboard /></RequireAuth>} />
