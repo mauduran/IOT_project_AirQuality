@@ -19,6 +19,24 @@
     background-color: #011529;
 }
 
+.centered {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.centered-multi {
+    width: 100%;
+    flex-direction: column;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.space-above {
+    margin-top: 60px;
+}
+
 .ant-statistic-title {
     font-size: 32px;
 }
