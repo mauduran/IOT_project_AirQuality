@@ -24,7 +24,7 @@ const HumidityMonitor = ({ delay, humidity, isLoading, fetchLastHumidity }) => {
                     <Spin size="large" />
                 </Space>
             </div>
-            : value
+            : value || "N/A"
     )
 
     return (
