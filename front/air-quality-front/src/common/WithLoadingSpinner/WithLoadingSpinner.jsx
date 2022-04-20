@@ -6,7 +6,7 @@ import "./WithLoadingSpinner.css";
 const WithLoadingSpinner = WrappedComponent => ({ isLoading, ...otherProps }) => {
 
     return isLoading ? (
-        <div className="centered">
+        <div className="centered space-above">
             <Space size="large">
                 <Spin size="large" />
             </Space>
