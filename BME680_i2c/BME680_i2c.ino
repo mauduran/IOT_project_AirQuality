@@ -39,11 +39,8 @@ void setup(void)
   Serial.begin(115200);
   Wire.begin(I2C_SDA,I2C_SCL); 
   
+  iaqSensor.begin(BME680_I2C_ADDR_PRIMARY, Wire);
   
-   if (!iaqSensor.begin(BME680_I2C_ADDR_PRIMARY, Wire)) {
-    Serial.println(F("Could not find a valid BME680 sensor, check wiring!"));
-    while (1);
-  }
   output = "\nBSEC library version " + String(iaqSensor.version.major) + "." + String(iaqSensor.version.minor) + "." + String(iaqSensor.version.major_bugfix) + "." + String(iaqSensor.version.minor_bugfix);
   Serial.println(output);
   //Init wifi network 
