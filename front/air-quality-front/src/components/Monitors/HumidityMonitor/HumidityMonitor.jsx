@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { Space, Spin, Statistic } from 'antd';
+import { Button, Space, Spin, Statistic, Tooltip } from 'antd';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { useInterval } from '../../../hooks/useInterval';
 import { fetchingLastSensorData, selectLastSensorData } from '../../../redux/sensors/sensors.selectors';
 import { getLastSensorDataStart } from '../../../redux/sensors/sensors.actions';
+import { SyncOutlined } from '@ant-design/icons';
 
 const HumidityMonitor = ({ delay, humidity, isLoading, fetchLastHumidity }) => {
     useEffect(() => {
@@ -30,7 +31,14 @@ const HumidityMonitor = ({ delay, humidity, isLoading, fetchLastHumidity }) => {
     return (
         <div className="temp-monitor-container">
             <Statistic
-                title="Humidity"
+                title={
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                    <Tooltip title="refresh">
+                        <Button onClick={fetchLastHumidity} shape="circle" type="text" icon={<SyncOutlined />} />
+                    </Tooltip>
+                    Humidity
+                </div>
+                }
                 formatter={setStatisticFormatter}
                 value={humidity && `${humidity.value} ${humidity.measurement}`} />
         </div>

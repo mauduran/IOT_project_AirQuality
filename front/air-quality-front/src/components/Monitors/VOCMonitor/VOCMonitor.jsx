@@ -21,6 +21,7 @@ const VOCMonitor = ({ delay, voc, isLoading, fetchLastVOC }) => {
         <SensorLevel
             sensorType="VOC"
             sensorData={voc}
+            action={fetchLastVOC}
             isLoading={isLoading} />
     )
 }

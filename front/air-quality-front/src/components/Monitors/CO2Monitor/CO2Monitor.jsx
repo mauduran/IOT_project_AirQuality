@@ -21,6 +21,7 @@ const CO2Monitor = ({ delay, co2, isLoading, fetchLastCO2 }) => {
         <SensorLevel
             sensorType="CO2"
             sensorData={co2}
+            action={fetchLastCO2}
             isLoading={isLoading} />
     )
 }

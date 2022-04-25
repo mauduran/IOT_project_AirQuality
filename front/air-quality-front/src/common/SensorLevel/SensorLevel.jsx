@@ -1,11 +1,12 @@
-import { Progress, Space, Spin, Statistic } from 'antd';
+import { SyncOutlined } from '@ant-design/icons';
+import { Button, Progress, Space, Spin, Statistic, Tooltip } from 'antd';
 import Title from 'antd/lib/typography/Title';
 import React from 'react';
 import { ALERT_LEVELS_TEXT } from '../../constants/AirQualityLevels';
 import RiskLevelColors from '../../constants/RiskLevelColors';
 import './SensorLevel.css';
 
-const SensorLevel = ({ sensorType, sensorData, isLoading }) => {
+const SensorLevel = ({ sensorType, sensorData, isLoading, action }) => {
     const setStatisticFormatter = (data) => {
         if (!data && !isLoading) return "N/A"
         return (isLoading ?
@@ -21,7 +22,7 @@ const SensorLevel = ({ sensorType, sensorData, isLoading }) => {
                     percent={(data.value * 100 / data.maxValue).toPrecision(2)}
                     format={_ => (
                         <>
-                            <p className="sensor-value">{data.value}</p> 
+                            <p className="sensor-value">{data.value}</p>
                             <p className="sensor-measurement">{data.measurement}</p>
                         </>
                     )}
@@ -38,11 +39,18 @@ const SensorLevel = ({ sensorType, sensorData, isLoading }) => {
             </div>
         )
     }
-
     return (
         <div className="temp-monitor-container">
             <Statistic
-                title={sensorType}
+                title={
+                    <div style={{display: "flex", alignItems: "center"}}>
+                        <Tooltip title="refresh">
+                            <Button onClick={action} shape="circle" type="text" icon={<SyncOutlined />} />
+                        </Tooltip>
+                        {sensorType}
+                    </div>
+
+                }
                 formatter={setStatisticFormatter}
                 value={sensorData} />
         </div>

@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { Space, Spin, Statistic } from 'antd';
+import { Button, Space, Spin, Statistic, Tooltip } from 'antd';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { useInterval } from '../../../hooks/useInterval';
 import { fetchingLastSensorData, selectLastSensorData } from '../../../redux/sensors/sensors.selectors';
 import { getLastSensorDataStart } from '../../../redux/sensors/sensors.actions';
+import { SyncOutlined } from '@ant-design/icons';
 
 const TemperatureMonitor = ({ delay, temperature, isLoading, fetchLastTemperature }) => {
     useEffect(() => {
@@ -30,9 +31,16 @@ const TemperatureMonitor = ({ delay, temperature, isLoading, fetchLastTemperatur
     return (
         <div className="temp-monitor-container">
             <Statistic
-                title="Temperature"
-                formatter={setStatisticFormatter}
-                value={temperature && `${temperature.value} ${temperature.measurement}`} />
+                title={
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                        <Tooltip title="refresh">
+                            <Button onClick={fetchLastTemperature} shape="circle" type="text" icon={<SyncOutlined />} />
+                        </Tooltip>
+                        Temperature
+                    </div>
+                }
+            formatter={setStatisticFormatter}
+            value={temperature && `${temperature.value} ${temperature.measurement}`} />
         </div>
     )
 }

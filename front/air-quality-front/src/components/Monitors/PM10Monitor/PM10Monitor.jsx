@@ -20,6 +20,7 @@ const PM10Monitor = ({ delay, pm10, isLoading, fetchLastPM10 }) => {
     return (
         <SensorLevel
             sensorType="PM10"
+            action={fetchLastPM10}
             sensorData={pm10}
             isLoading={isLoading} />
     )
