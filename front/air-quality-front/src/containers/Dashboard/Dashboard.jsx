@@ -1,17 +1,19 @@
 import React from 'react';
+import Title from 'antd/lib/typography/Title';
 import { connect } from 'react-redux';
 import { Col, Row, Tabs } from 'antd';
-import Title from 'antd/lib/typography/Title';
+import { createStructuredSelector } from 'reselect';
 
 import HumidityMonitor from '../../components/Monitors/HumidityMonitor/HumidityMonitor';
 import TemperatureMonitor from '../../components/Monitors/TemperatureMonitor/TemperatureMonitor';
+import TemperatureDailyMonitor from '../../components/Monitors/TemperatureMonitor/TemperatureDailyMonitor';
 import CO2Monitor from '../../components/Monitors/CO2Monitor/CO2Monitor';
 import VOCMonitor from '../../components/Monitors/VOCMonitor/VOCMonitor';
-import { msToMinutes } from '../../utils/time.utils';
 import PM25Monitor from '../../components/Monitors/PM25Monitor/PM25Monitor';
 import PM10Monitor from '../../components/Monitors/PM10Monitor/PM10Monitor';
-import { createStructuredSelector } from 'reselect';
+import { msToMinutes } from '../../utils/time.utils';
 import { selectCurrentAccountTitle } from '../../redux/account/account.selectors';
+import PM25DailyMonitor from '../../components/Monitors/PM25Monitor/PM25DailyMonitor';
 
 const { TabPane } = Tabs;
 
@@ -22,8 +24,8 @@ const Dashboard = ({ accountTitle }) => {
             <div style={{ margin: "20px auto", width: "96%" }}>
                 <Row gutter={[24, 12]} style={{ marginBottom: "15px" }} align="middle" justify="space-evenly">
                     <Col xs={24} sm={24} md={24} lg={8} xl={12}>
-                    <div className='page-header'>
-                        <Title style={{ fontSize: "48px", color: "white", margin: "0 10px 0 0", textAlign: "justify" }} level={1}>{accountTitle}</Title>
+                        <div className='page-header'>
+                            <Title style={{ fontSize: "48px", color: "white", margin: "0 10px 0 0", textAlign: "justify" }} level={1}>{accountTitle}</Title>
                         </div>
                     </Col>
                     <Col xs={24} sm={24} md={12} lg={8} xl={6}>
@@ -56,7 +58,11 @@ const Dashboard = ({ accountTitle }) => {
                 <div>
                     <Tabs onChange={() => { }}>
                         <TabPane tab="Temperature" key="temperature">
-
+                            <Row gutter={[24, 24]} style={{ marginBottom: "15px" }} align="middle" justify="space-evenly">
+                                <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                                    <TemperatureDailyMonitor />
+                                </Col>
+                            </Row>
                         </TabPane>
                         <TabPane tab="Humidity" key="humidity">
 
@@ -68,7 +74,11 @@ const Dashboard = ({ accountTitle }) => {
 
                         </TabPane>
                         <TabPane tab="PM2.5" key="pm2.5">
-
+                            <Row gutter={[24, 24]} style={{ marginBottom: "15px" }} align="middle" justify="space-evenly">
+                                <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                                    <PM25DailyMonitor />
+                                </Col>
+                            </Row>
                         </TabPane>
                         <TabPane tab="PM10" key="PM10">
 
