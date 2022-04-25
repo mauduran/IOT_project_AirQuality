@@ -29,7 +29,7 @@ export function* getLastSensorData({ payload: { sensorType } }) {
     }
 }
 
-export function* getDailySensorData({ payload: sensorType, day, month, year }) {
+export function* getDailySensorData({ payload: { sensorType, day, month, year } }) {
     try {
         if (!(sensorType in SENSOR_TYPES))
             throw new Error("Could not fetch sensor data. Invalid sensor type.");
@@ -54,7 +54,7 @@ export function* getDailySensorData({ payload: sensorType, day, month, year }) {
     }
 }
 
-export function* getWeeklySensorData({ payload: sensorType, offset }) {
+export function* getWeeklySensorData({ payload: { sensorType, offset } }) {
     try {
         if (!(sensorType in SENSOR_TYPES))
             throw new Error("Could not fetch sensor data. Invalid sensor type.");
@@ -79,7 +79,7 @@ export function* getWeeklySensorData({ payload: sensorType, offset }) {
     }
 }
 
-export function* getMonthlySensorData({ payload: sensorType, year, month }) {
+export function* getMonthlySensorData({ payload: { sensorType, year, month } }) {
     try {
         if (!(sensorType in SENSOR_TYPES))
             throw new Error("Could not fetch sensor data. Invalid sensor type.");
