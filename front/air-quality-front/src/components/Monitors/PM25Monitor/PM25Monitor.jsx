@@ -21,6 +21,7 @@ const PM25Monitor = ({ delay, pm25, isLoading, fetchLastPM25 }) => {
         <SensorLevel
             sensorType="PM25"
             sensorData={pm25}
+            action={fetchLastPM25}
             isLoading={isLoading} />
     )
 }
