@@ -34,9 +34,9 @@ function App({ checkAccountSession, isLoggedIn, accountName, fetchAccountProfile
 
   return (
     <div className="App">
-      <Layout style={{ height: "100%" }}>
+      <Layout style={{ height: "100%", backgroundColor: "#ddd" }}>
         <AppHeader />
-        <Layout>
+        <Layout >
           {isLoggedIn && <Sider width="256px">
             <Menu
               style={{ width: 256 }}

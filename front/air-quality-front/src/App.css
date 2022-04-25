@@ -57,3 +57,7 @@
     width: 0.5em !important;
     height: 0.5em !important;
 }
+
+.ant-layout{
+ background-color: #ddd !important; 
+}
