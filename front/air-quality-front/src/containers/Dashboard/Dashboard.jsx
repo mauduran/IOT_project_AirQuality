@@ -18,6 +18,8 @@ import HumidityDailyMonitor from '../../components/Monitors/HumidityMonitor/Humi
 import PM10DailyMonitor from '../../components/Monitors/PM10Monitor/PM10DailyMonitor';
 import VOCDailyMonitor from '../../components/Monitors/VOCMonitor/VOCDailyMonitor';
 import CO2DailyMonitor from '../../components/Monitors/CO2Monitor/CO2DailyMonitor';
+import TemperatureMonthlyMonitor from '../../components/Monitors/TemperatureMonitor/TemperatureMonthlyMonitor';
+import HumidityMonthlyMonitor from '../../components/Monitors/HumidityMonitor/HumidityMonthlyMonitor';
 
 const { TabPane } = Tabs;
 
@@ -62,42 +64,48 @@ const Dashboard = ({ accountTitle }) => {
                 <div>
                     <Tabs onChange={() => { }}>
                         <TabPane tab="Temperature" key="temperature">
-                            <Row gutter={[24, 24]} style={{ marginBottom: "15px" }} align="middle" justify="space-evenly">
+                            <Row gutter={[24, 24]} style={{ marginBottom: "15px" }} justify="space-evenly">
                                 <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                                     <TemperatureDailyMonitor />
+                                </Col>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                                    <TemperatureMonthlyMonitor />
                                 </Col>
                             </Row>
                         </TabPane>
                         <TabPane tab="Humidity" key="humidity">
-                            <Row gutter={[24, 24]} style={{ marginBottom: "15px" }} align="middle" justify="space-evenly">
+                            <Row gutter={[24, 24]} style={{ marginBottom: "15px" }} justify="space-evenly">
                                 <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                                     <HumidityDailyMonitor />
+                                </Col>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                                    <HumidityMonthlyMonitor />
                                 </Col>
                             </Row>
                         </TabPane>
                         <TabPane tab="CO2" key="co2">
-                        <Row gutter={[24, 24]} style={{ marginBottom: "15px" }} align="middle" justify="space-evenly">
+                            <Row gutter={[24, 24]} style={{ marginBottom: "15px" }} justify="space-evenly">
                                 <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                                     <CO2DailyMonitor />
                                 </Col>
                             </Row>
                         </TabPane>
                         <TabPane tab="VOC" key="voc">
-                            <Row gutter={[24, 24]} style={{ marginBottom: "15px" }} align="middle" justify="space-evenly">
+                            <Row gutter={[24, 24]} style={{ marginBottom: "15px" }} justify="space-evenly">
                                 <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                                     <VOCDailyMonitor />
                                 </Col>
                             </Row>
                         </TabPane>
                         <TabPane tab="PM2.5" key="pm2.5">
-                            <Row gutter={[24, 24]} style={{ marginBottom: "15px" }} align="middle" justify="space-evenly">
+                            <Row gutter={[24, 24]} style={{ marginBottom: "15px" }} justify="space-evenly">
                                 <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                                     <PM25DailyMonitor />
                                 </Col>
                             </Row>
                         </TabPane>
                         <TabPane tab="PM10" key="PM10">
-                            <Row gutter={[24, 24]} style={{ marginBottom: "15px" }} align="middle" justify="space-evenly">
+                            <Row gutter={[24, 24]} style={{ marginBottom: "15px" }} justify="space-evenly">
                                 <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                                     <PM10DailyMonitor />
                                 </Col>
