@@ -7,19 +7,18 @@ import { createStructuredSelector } from 'reselect';
 import { getDailySensorDataStart } from '../../../redux/sensors/sensors.actions';
 import { fetchingDailySensorData, selectDailySensorData } from '../../../redux/sensors/sensors.selectors';
 import { Space, Spin } from 'antd';
-import { getPM25Limits } from '../../../constants/SensorLimits';
 
 const today = new Date();
 
-const PM25DailyMonitor = ({ fetchPM25ForDay, pm25s, isLoading }) => {
+const HumidityDailyMonitor = ({ fetchHumidityForDay, humidities, isLoading }) => {
     const [date, setDate] = useState({date: moment(today)});
 
     useEffect(() => {
         const [day, month, year] = date.date.format("DD/MM/YYYY").split("/");
 
-        fetchPM25ForDay(day, month, year);
+        fetchHumidityForDay(day, month, year);
 
-    }, [fetchPM25ForDay, date])
+    }, [fetchHumidityForDay, date])
 
     if (isLoading)
         return <div className='centered' style={{ width: "100%" }}>
@@ -31,24 +30,22 @@ const PM25DailyMonitor = ({ fetchPM25ForDay, pm25s, isLoading }) => {
     return (
         <DailySensorGraph
             date={date.date}
-            titleY="PM2.5 (ug/m3)"
-            sensorType="PM25"
+            titleY="Humidity (%)"
+            sensorType="Humidity"
             onRefresh={(date)=>setDate({date})}
-            values={pm25s && pm25s.map((pm25) => parseFloat(pm25.value))}
-            categories={pm25s && pm25s.map((pm25) => new Date(pm25.date).toLocaleTimeString())}
-            levels={getPM25Limits()}
-            minY={0}
+            values={humidities && humidities.map((humidity) => parseFloat(humidity.value))}
+            categories={humidities && humidities.map((humidity) => new Date(humidity.date).toLocaleTimeString())}
         />
     )
 }
 
 const mapDispatchToProps = dispatch => ({
-    fetchPM25ForDay: (day, month, year) => dispatch(getDailySensorDataStart("pm2.5", day, month, year))
+    fetchHumidityForDay: (day, month, year) => dispatch(getDailySensorDataStart("humidity", day, month, year))
 })
 
 const mapStateToProps = createStructuredSelector({
-    pm25s: selectDailySensorData("pm2.5"),
-    isLoading: fetchingDailySensorData("pm2.5"),
+    humidities: selectDailySensorData("humidity"),
+    isLoading: fetchingDailySensorData("humidity"),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(PM25DailyMonitor);
+export default connect(mapStateToProps, mapDispatchToProps)(HumidityDailyMonitor);

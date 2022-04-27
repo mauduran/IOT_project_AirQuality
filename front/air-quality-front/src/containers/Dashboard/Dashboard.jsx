@@ -14,6 +14,10 @@ import PM10Monitor from '../../components/Monitors/PM10Monitor/PM10Monitor';
 import { msToMinutes } from '../../utils/time.utils';
 import { selectCurrentAccountTitle } from '../../redux/account/account.selectors';
 import PM25DailyMonitor from '../../components/Monitors/PM25Monitor/PM25DailyMonitor';
+import HumidityDailyMonitor from '../../components/Monitors/HumidityMonitor/HumidityDailyMonitor';
+import PM10DailyMonitor from '../../components/Monitors/PM10Monitor/PM10DailyMonitor';
+import VOCDailyMonitor from '../../components/Monitors/VOCMonitor/VOCDailyMonitor';
+import CO2DailyMonitor from '../../components/Monitors/CO2Monitor/CO2DailyMonitor';
 
 const { TabPane } = Tabs;
 
@@ -65,13 +69,25 @@ const Dashboard = ({ accountTitle }) => {
                             </Row>
                         </TabPane>
                         <TabPane tab="Humidity" key="humidity">
-
+                            <Row gutter={[24, 24]} style={{ marginBottom: "15px" }} align="middle" justify="space-evenly">
+                                <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                                    <HumidityDailyMonitor />
+                                </Col>
+                            </Row>
                         </TabPane>
                         <TabPane tab="CO2" key="co2">
-
+                        <Row gutter={[24, 24]} style={{ marginBottom: "15px" }} align="middle" justify="space-evenly">
+                                <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                                    <CO2DailyMonitor />
+                                </Col>
+                            </Row>
                         </TabPane>
                         <TabPane tab="VOC" key="voc">
-
+                            <Row gutter={[24, 24]} style={{ marginBottom: "15px" }} align="middle" justify="space-evenly">
+                                <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                                    <VOCDailyMonitor />
+                                </Col>
+                            </Row>
                         </TabPane>
                         <TabPane tab="PM2.5" key="pm2.5">
                             <Row gutter={[24, 24]} style={{ marginBottom: "15px" }} align="middle" justify="space-evenly">
@@ -81,7 +97,11 @@ const Dashboard = ({ accountTitle }) => {
                             </Row>
                         </TabPane>
                         <TabPane tab="PM10" key="PM10">
-
+                            <Row gutter={[24, 24]} style={{ marginBottom: "15px" }} align="middle" justify="space-evenly">
+                                <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                                    <PM10DailyMonitor />
+                                </Col>
+                            </Row>
                         </TabPane>
 
                     </Tabs>

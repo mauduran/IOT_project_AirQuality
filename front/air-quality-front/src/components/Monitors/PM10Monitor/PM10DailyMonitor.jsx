@@ -7,19 +7,19 @@ import { createStructuredSelector } from 'reselect';
 import { getDailySensorDataStart } from '../../../redux/sensors/sensors.actions';
 import { fetchingDailySensorData, selectDailySensorData } from '../../../redux/sensors/sensors.selectors';
 import { Space, Spin } from 'antd';
-import { getPM25Limits } from '../../../constants/SensorLimits';
+import { getPM10Limits } from '../../../constants/SensorLimits';
 
 const today = new Date();
 
-const PM25DailyMonitor = ({ fetchPM25ForDay, pm25s, isLoading }) => {
+const PM10DailyMonitor = ({ fetchPM10ForDay, pm10s, isLoading }) => {
     const [date, setDate] = useState({date: moment(today)});
 
     useEffect(() => {
         const [day, month, year] = date.date.format("DD/MM/YYYY").split("/");
 
-        fetchPM25ForDay(day, month, year);
+        fetchPM10ForDay(day, month, year);
 
-    }, [fetchPM25ForDay, date])
+    }, [fetchPM10ForDay, date])
 
     if (isLoading)
         return <div className='centered' style={{ width: "100%" }}>
@@ -31,24 +31,24 @@ const PM25DailyMonitor = ({ fetchPM25ForDay, pm25s, isLoading }) => {
     return (
         <DailySensorGraph
             date={date.date}
-            titleY="PM2.5 (ug/m3)"
-            sensorType="PM25"
+            titleY="PM10 (ug/m3)"
+            sensorType="PM10"
             onRefresh={(date)=>setDate({date})}
-            values={pm25s && pm25s.map((pm25) => parseFloat(pm25.value))}
-            categories={pm25s && pm25s.map((pm25) => new Date(pm25.date).toLocaleTimeString())}
-            levels={getPM25Limits()}
+            values={pm10s && pm10s.map((pm10) => parseFloat(pm10.value))}
+            categories={pm10s && pm10s.map((pm10) => new Date(pm10.date).toLocaleTimeString())}
+            levels={getPM10Limits()}
             minY={0}
         />
     )
 }
 
 const mapDispatchToProps = dispatch => ({
-    fetchPM25ForDay: (day, month, year) => dispatch(getDailySensorDataStart("pm2.5", day, month, year))
+    fetchPM10ForDay: (day, month, year) => dispatch(getDailySensorDataStart("pm10", day, month, year))
 })
 
 const mapStateToProps = createStructuredSelector({
-    pm25s: selectDailySensorData("pm2.5"),
-    isLoading: fetchingDailySensorData("pm2.5"),
+    pm10s: selectDailySensorData("pm10"),
+    isLoading: fetchingDailySensorData("pm10"),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(PM25DailyMonitor);
+export default connect(mapStateToProps, mapDispatchToProps)(PM10DailyMonitor);
