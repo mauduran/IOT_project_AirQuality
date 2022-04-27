@@ -38,12 +38,6 @@ const DailySensorGraph = ({ levels, onRefresh, values, titleY, sensorType, categ
           data: values
         }
       ],
-      plotOptions: {
-        series: {
-          point: {
-          }
-        }
-      }
     })
   }, [values, categories, date, levels, sensorType, titleY, minY, maxY])
 
