@@ -21,7 +21,7 @@ const Dashboard = ({ accountTitle }) => {
     const fetchInterval = msToMinutes(5);
     return (
         <div className="Dashboard">
-            <div style={{ margin: "20px auto", width: "96%" }}>
+            <div style={{ margin: "5px auto", width: "96%" }}>
                 <Row gutter={[24, 12]} style={{ marginBottom: "15px" }} align="middle" justify="space-evenly">
                     <Col xs={24} sm={24} md={24} lg={8} xl={12}>
                         <div className='page-header'>
