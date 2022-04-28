@@ -33,6 +33,7 @@ const HumidityDailyMonitor = ({ fetchHumidityForDay, humidities, isLoading }) =>
             titleY="Humidity (%)"
             sensorType="Humidity"
             onRefresh={(date)=>setDate({date})}
+            seriesName="Humidity level"
             values={humidities && humidities.map((humidity) => parseFloat(humidity.value))}
             categories={humidities && humidities.map((humidity) => new Date(humidity.date).toLocaleTimeString())}
         />

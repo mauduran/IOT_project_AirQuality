@@ -6,7 +6,7 @@ import { Button, DatePicker, Tooltip } from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
 import Title from 'antd/lib/typography/Title';
 
-const DailySensorGraph = ({ onRefresh, values, titleY, sensorType, categories, date, minY, maxY }) => {
+const DailySensorGraph = ({ onRefresh, values, titleY, sensorType, seriesName, categories, date, minY, maxY }) => {
     const [chartOptions, setchartOptions] = useState({});
     const dateFormat = 'MM/YYYY';
 
@@ -27,12 +27,12 @@ const DailySensorGraph = ({ onRefresh, values, titleY, sensorType, categories, d
             },
             series: [
                 {
-                    name: "Temperatures",
+                    name: seriesName,
                     data: values
                 }
             ],
         })
-    }, [values, categories, date, sensorType, titleY, minY, maxY])
+    }, [values, categories, date, sensorType, titleY, minY, maxY, seriesName])
 
     const disabledDate = (current) => {
         return current && current > moment().endOf('day');

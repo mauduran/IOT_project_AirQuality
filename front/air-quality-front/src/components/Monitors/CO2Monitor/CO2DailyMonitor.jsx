@@ -36,6 +36,7 @@ const CO2DailyMonitor = ({ fetchCO2ForDay, co2s, isLoading }) => {
             onRefresh={(date)=>setDate({date})}
             values={co2s && co2s.map((co2) => parseFloat(co2.value))}
             categories={co2s && co2s.map((co2) => new Date(co2.date).toLocaleTimeString())}
+            seriesName="CO2 level"
             levels={getCO2Limits()}
             minY={0}
         />

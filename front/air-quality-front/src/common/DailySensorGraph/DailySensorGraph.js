@@ -6,7 +6,7 @@ import { Button, DatePicker, Tooltip } from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
 import Title from 'antd/lib/typography/Title';
 
-const DailySensorGraph = ({ levels, onRefresh, values, titleY, sensorType, categories, date, minY, maxY }) => {
+const DailySensorGraph = ({ levels, onRefresh, values, titleY, sensorType, categories, date, seriesName, minY, maxY }) => {
   const [chartOptions, setchartOptions] = useState({});
   const dateFormat = 'DD/MM/YYYY';
 
@@ -34,12 +34,12 @@ const DailySensorGraph = ({ levels, onRefresh, values, titleY, sensorType, categ
       },
       series: [
         {
-          name: "Temperatures",
+          name: seriesName,
           data: values
         }
       ],
     })
-  }, [values, categories, date, levels, sensorType, titleY, minY, maxY])
+  }, [values, categories, date, seriesName, levels, sensorType, titleY, minY, maxY])
 
   const disabledDate = (current) => {
     return current && current > moment().endOf('day');
@@ -69,12 +69,12 @@ const DailySensorGraph = ({ levels, onRefresh, values, titleY, sensorType, categ
         />
       </div>
       {
-        values && values.length?
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={chartOptions}
-        />:
-        <Title style={{ fontSize: "48px" }} level={1}>N/A</Title>
+        values && values.length ?
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={chartOptions}
+          /> :
+          <Title style={{ fontSize: "48px" }} level={1}>N/A</Title>
       }
     </>
   )

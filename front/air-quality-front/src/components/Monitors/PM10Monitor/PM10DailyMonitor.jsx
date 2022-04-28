@@ -37,6 +37,7 @@ const PM10DailyMonitor = ({ fetchPM10ForDay, pm10s, isLoading }) => {
             values={pm10s && pm10s.map((pm10) => parseFloat(pm10.value))}
             categories={pm10s && pm10s.map((pm10) => new Date(pm10.date).toLocaleTimeString())}
             levels={getPM10Limits()}
+            seriesName="PM10 Level"
             minY={0}
         />
     )

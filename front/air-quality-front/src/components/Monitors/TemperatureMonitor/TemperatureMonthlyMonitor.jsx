@@ -53,6 +53,7 @@ const TemperatureMonthlyMonitor = ({ fetchTemperatureForMonth, temperatures, isL
             onRefresh={(date) => setDate({ date })}
             values={values}
             categories={categories}
+            seriesName="Temperature Level"
         />
     )
 }

@@ -37,6 +37,7 @@ const PM25DailyMonitor = ({ fetchPM25ForDay, pm25s, isLoading }) => {
             values={pm25s && pm25s.map((pm25) => parseFloat(pm25.value))}
             categories={pm25s && pm25s.map((pm25) => new Date(pm25.date).toLocaleTimeString())}
             levels={getPM25Limits()}
+            seriesName="PM2.5 Level"
             minY={0}
         />
     )

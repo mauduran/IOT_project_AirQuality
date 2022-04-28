@@ -32,6 +32,7 @@ const TemperatureDailyMonitor = ({ fetchTemperatureForDay, temperatures, isLoadi
             date={date.date}
             titleY="Temperature (ºC)"
             sensorType="Temperature"
+            seriesName="Temperature Level"
             onRefresh={(date)=>setDate({date})}
             values={temperatures && temperatures.map((temperature) => parseFloat(temperature.value))}
             categories={temperatures && temperatures.map((temperature) => new Date(temperature.date).toLocaleTimeString())}

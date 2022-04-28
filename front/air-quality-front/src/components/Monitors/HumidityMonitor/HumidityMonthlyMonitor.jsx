@@ -17,7 +17,7 @@ const HumidityMonthlyMonitor = ({ fetchHumidityForMonth, humidities, isLoading }
     const [categories, setCategories] = useState([]);
     const [values, setValues] = useState([]);
     const [daysInMonth, setDaysInMonth] = useState(moment(today).daysInMonth());
-    
+
     useEffect(() => {
         const [month, year] = date.date.format("MM/YYYY").split("/");
 
@@ -49,6 +49,7 @@ const HumidityMonthlyMonitor = ({ fetchHumidityForMonth, humidities, isLoading }
             titleY="Humidity (%)"
             sensorType="Humidity"
             onRefresh={(date) => setDate({ date })}
+            seriesName="Humidity level"
             values={values}
             categories={categories}
         />
