@@ -6,14 +6,14 @@ import { Button, DatePicker, Tooltip } from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
 import Title from 'antd/lib/typography/Title';
 
-const DailySensorGraph = ({ onRefresh, values, titleY, sensorType, seriesName, categories, date, minY, maxY }) => {
+const DailySensorGraphWithLevels = ({ onRefresh, valuesMap, titleY, sensorType,  categories, date }) => {
     const [chartOptions, setchartOptions] = useState({});
     const dateFormat = 'MM/YYYY';
 
     useEffect(() => {
         setchartOptions({
             title: {
-                text: `Monthly ${sensorType} Levels for ${date.format("MM/YYYY")}`
+                text: `Daily ${sensorType} Levels for ${date.format("MM/YYYY")}`
             },
             xAxis: {
                 categories: categories,
@@ -22,17 +22,16 @@ const DailySensorGraph = ({ onRefresh, values, titleY, sensorType, seriesName, c
                 title: {
                     text: titleY
                 },
-                min: minY,
-                max: maxY,
+                min: 0,
             },
-            series: [
-                {
-                    name: seriesName,
-                    data: values
-                }
-            ],
+            series: Object.values(valuesMap).map(item=>({
+                name: item.title,
+                data: item.values,
+                color: item.color,
+            })),
+
         })
-    }, [values, categories, date, sensorType, titleY, minY, maxY, seriesName])
+    }, [valuesMap, categories, date, sensorType, titleY])
 
     const disabledDate = (current) => {
         return current && current > moment().endOf('day');
@@ -63,7 +62,7 @@ const DailySensorGraph = ({ onRefresh, values, titleY, sensorType, seriesName, c
 
             </div>
             {
-                values && values.length ?
+                valuesMap && Object.keys(valuesMap).length ?
                     <HighchartsReact
                         highcharts={Highcharts}
                         options={chartOptions}
@@ -74,4 +73,4 @@ const DailySensorGraph = ({ onRefresh, values, titleY, sensorType, seriesName, c
     )
 }
 
-export default DailySensorGraph
+export default DailySensorGraphWithLevels
