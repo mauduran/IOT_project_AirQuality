@@ -11,8 +11,6 @@ import CO2Monitor from '../../components/Monitors/CO2Monitor/CO2Monitor';
 import VOCMonitor from '../../components/Monitors/VOCMonitor/VOCMonitor';
 import PM25Monitor from '../../components/Monitors/PM25Monitor/PM25Monitor';
 import PM10Monitor from '../../components/Monitors/PM10Monitor/PM10Monitor';
-import { msToMinutes } from '../../utils/time.utils';
-import { selectCurrentAccountTitle } from '../../redux/account/account.selectors';
 import PM25DailyMonitor from '../../components/Monitors/PM25Monitor/PM25DailyMonitor';
 import HumidityDailyMonitor from '../../components/Monitors/HumidityMonitor/HumidityDailyMonitor';
 import PM10DailyMonitor from '../../components/Monitors/PM10Monitor/PM10DailyMonitor';
@@ -20,18 +18,24 @@ import VOCDailyMonitor from '../../components/Monitors/VOCMonitor/VOCDailyMonito
 import CO2DailyMonitor from '../../components/Monitors/CO2Monitor/CO2DailyMonitor';
 import TemperatureMonthlyMonitor from '../../components/Monitors/TemperatureMonitor/TemperatureMonthlyMonitor';
 import HumidityMonthlyMonitor from '../../components/Monitors/HumidityMonitor/HumidityMonthlyMonitor';
+import CO2MonthlyMonitor from '../../components/Monitors/CO2Monitor/CO2MonthlyMonitor';
+import { msToMinutes } from '../../utils/time.utils';
+import { selectCurrentAccountTitle } from '../../redux/account/account.selectors';
+import PM10MonthlyMonitor from '../../components/Monitors/PM10Monitor/PM10MonthlyMonitor';
+import PM25MonthlyMonitor from '../../components/Monitors/PM25Monitor/PM25MonthlyMonitor';
+import VOCMonthlyMonitor from '../../components/Monitors/VOCMonitor/VOCMonthlyMonitor';
 
 const { TabPane } = Tabs;
 
 const Dashboard = ({ accountTitle }) => {
     const fetchInterval = msToMinutes(5);
     return (
-        <div className="Dashboard">
-            <div style={{ margin: "5px auto", width: "96%" }}>
+        <div className="Dashboard" style={{ backgroundColor: "white", height: "100%", width: "100%" }}>
+            <div style={{ margin: "0 auto", width: "96%", paddingTop: "5px" }}>
                 <Row gutter={[24, 12]} style={{ marginBottom: "15px" }} align="middle" justify="space-evenly">
                     <Col xs={24} sm={24} md={24} lg={8} xl={12}>
                         <div className='page-header'>
-                            <Title style={{ fontSize: "48px", color: "white", margin: "0 10px 0 0", textAlign: "justify" }} level={1}>{accountTitle}</Title>
+                            <Title style={{ fontSize: "48px", color: "white", margin: "0 10px 0 0", textAlign: "justify" }} level={1}>{accountTitle || "Fetching Account..."}</Title>
                         </div>
                     </Col>
                     <Col xs={24} sm={24} md={12} lg={8} xl={6}>
@@ -88,12 +92,18 @@ const Dashboard = ({ accountTitle }) => {
                                 <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                                     <CO2DailyMonitor />
                                 </Col>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                                    <CO2MonthlyMonitor />
+                                </Col>
                             </Row>
                         </TabPane>
                         <TabPane tab="VOC" key="voc">
                             <Row gutter={[24, 24]} style={{ marginBottom: "15px" }} justify="space-evenly">
                                 <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                                     <VOCDailyMonitor />
+                                </Col>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                                    <VOCMonthlyMonitor />
                                 </Col>
                             </Row>
                         </TabPane>
@@ -102,12 +112,18 @@ const Dashboard = ({ accountTitle }) => {
                                 <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                                     <PM25DailyMonitor />
                                 </Col>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                                    <PM25MonthlyMonitor />
+                                </Col>
                             </Row>
                         </TabPane>
                         <TabPane tab="PM10" key="PM10">
                             <Row gutter={[24, 24]} style={{ marginBottom: "15px" }} justify="space-evenly">
                                 <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                                     <PM10DailyMonitor />
+                                </Col>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                                    <PM10MonthlyMonitor />
                                 </Col>
                             </Row>
                         </TabPane>
