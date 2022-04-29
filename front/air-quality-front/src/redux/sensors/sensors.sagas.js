@@ -9,7 +9,7 @@ export function* getLastSensorData({ payload: { sensorType } }) {
         if (!(sensorType in SENSOR_TYPES))
             throw new Error("Could not fetch sensor data. Invalid sensor type.");
 
-        const response = yield fetch(`/${sensorType}/most-recent`, {
+        const response = yield fetch(`/api/${sensorType}/most-recent`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ export function* getDailySensorData({ payload: { sensorType, day, month, year } 
         if (!(sensorType in SENSOR_TYPES))
             throw new Error("Could not fetch sensor data. Invalid sensor type.");
 
-        const response = yield fetch(`/${sensorType}/${year}/${month}/${day}`, {
+        const response = yield fetch(`/api/${sensorType}/${year}/${month}/${day}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export function* getWeeklySensorData({ payload: { sensorType, offset } }) {
         if (!(sensorType in SENSOR_TYPES))
             throw new Error("Could not fetch sensor data. Invalid sensor type.");
 
-        const response = yield fetch(`/${sensorType}/week/${offset}`, {
+        const response = yield fetch(`/api/${sensorType}/week/${offset}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ export function* getMonthlySensorData({ payload: { sensorType, year, month } }) 
         if (!(sensorType in SENSOR_TYPES))
             throw new Error("Could not fetch sensor data. Invalid sensor type.");
 
-        const response = yield fetch(`/${sensorType}/${year}/${month}`, {
+        const response = yield fetch(`/api/${sensorType}/${year}/${month}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

@@ -34,7 +34,7 @@ export function* isAccountAuthenticated() {
 
 export function* getAccountProfile() {
     try {
-        const response = yield fetch("/accounts/account", {
+        const response = yield fetch("/api/accounts/account", {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ export function* changePassword({ payload: { currentPassword, newPassword } }) {
     const body = { currentPassword, newPassword };
 
     try {
-        const response = yield fetch("/account/change-password", {
+        const response = yield fetch("/api/account/change-password", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ export function* changeTitle({ payload: { title } }) {
     const body = { title };
 
     try {
-        const response = yield fetch("/account/title", {
+        const response = yield fetch("/api/account/title", {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -125,7 +125,7 @@ export function* changeDescription({ payload: { description } }) {
     const body = { description };
 
     try {
-        const response = yield fetch("/account/description", {
+        const response = yield fetch("/api/account/description", {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -156,7 +156,7 @@ export function* signIn({ payload: { accountName, password } }) {
     const body = { accountName, password };
     console.log(accountName + " " + password);
     try {
-        const response = yield fetch("/account/login", {
+        const response = yield fetch("/api/account/login", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -196,7 +196,7 @@ export function* signOut() {
 
 export function* signUp({ payload: { accountName, password, title } }) {
     try {
-        const response = yield fetch("/account", {
+        const response = yield fetch("/api/account", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

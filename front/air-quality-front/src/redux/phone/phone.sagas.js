@@ -10,7 +10,7 @@ export function* registerPhone({ payload: { phoneNumber } }) {
 
     try {
         console.log("fetching...?");
-        const response = yield fetch("/account/phone/register", {
+        const response = yield fetch("/api/account/phone/register", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export function* verifyPhone({ payload: { phoneNumber, verificationCode } }) {
     const body = { phoneNumber, verificationCode };
 
     try {
-        const response = yield fetch("/account/phone/verify", {
+        const response = yield fetch("/api/account/phone/verify", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

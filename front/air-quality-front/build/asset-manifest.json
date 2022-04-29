@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.ef24cafd.css",
+    "main.js": "/static/js/main.d267f478.js",
+    "static/media/air_quality_logo_nobg.png": "/static/media/air_quality_logo_nobg.17d09e4a4994aea06218.png",
+    "index.html": "/index.html",
+    "main.ef24cafd.css.map": "/static/css/main.ef24cafd.css.map",
+    "main.d267f478.js.map": "/static/js/main.d267f478.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ef24cafd.css",
+    "static/js/main.d267f478.js"
+  ]
+}

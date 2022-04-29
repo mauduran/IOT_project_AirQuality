@@ -36,8 +36,10 @@ package:
     individually: true
 
 custom:
-  tableName: x
-  tokenSecret: x
+  # tableName: x
+  # tokenSecret: x
+  tableName: IoT_AirQuality_Table
+  tokenSecret: AYWOW_AMAZING!
 
   webpack:
     webpackConfig: ./webpack.config.js
