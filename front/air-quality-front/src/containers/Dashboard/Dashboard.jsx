@@ -30,7 +30,7 @@ const { TabPane } = Tabs;
 const Dashboard = ({ accountTitle }) => {
     const fetchInterval = msToMinutes(5);
     return (
-        <div className="Dashboard" style={{ backgroundColor: "white", height: "100%", width: "100%" }}>
+        <div className="Dashboard" style={{ backgroundColor: "white", height: "100%", width: "100%", overflowY: "scroll" }}>
             <div style={{ margin: "0 auto", width: "96%", paddingTop: "5px" }}>
                 <Row gutter={[24, 12]} style={{ marginBottom: "15px" }} align="middle" justify="space-evenly">
                     <Col xs={24} sm={24} md={24} lg={8} xl={12}>
