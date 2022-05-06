@@ -1,0 +1,15 @@
+Air quality project main source
+This system is using the following Hardware:
+ *    ESP32 development kit
+ *    BME680 gas sensor for temperature, humidity and VOC
+ *    PMS5003 gas sensor for PM2.5 and PM10
+You can configure the WiFi configuration to access to a private network on the following lines
+
+/* Network variables*/
+const char* ssid = "INFINITUMC9C6_2.4";
+const char* password = "DrA32ehN9D";
+
+It is also possible to configure how often the messages are sent to the cloud on definition 
+#define SERVER_UPLOAD 60000*4 //Upload data to cloud each 4 minutes
+
+Main system is working sending VOC, CO2, PM2.5, PM10 and Temperature and humidity 
