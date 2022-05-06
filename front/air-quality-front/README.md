@@ -11,7 +11,7 @@
 
 
 - **Account**: `/account` - Account settings. Allows user to see current settings and do operations such as changing the title or password for the account and registering a phone number for SMS alerts.
-- 
+
 ![image](https://user-images.githubusercontent.com/43227523/167073225-48ce645f-9db7-4b80-845e-f2860f2a8cd9.png)
 
 ## Available Scripts
