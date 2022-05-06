@@ -17,4 +17,4 @@ The `server.js` will take care of everything else, including the logic of callin
 
 ### `npm start`
 Runs the app in the production mode.\
-Run on the port specified as an environment variable (`PORT`) or uses port 300 as default.
+Run on the port specified as an environment variable (`PORT`) or uses port 3000 as default.
