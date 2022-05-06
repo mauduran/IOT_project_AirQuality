@@ -4,7 +4,6 @@
  * Measures pollution levels in the air using CO2, VOC and PM levels
  * as reference with the following hardware:
  *    ESP32 development kit
- *    MQ135 gas sensor for CO2
  *    BME680 gas sensor for temperature, humidity and VOC
  *    PMS5003 gas sensor for PM2.5 and PM10
  *
@@ -16,7 +15,6 @@
  */
 
 /************************ Sensors libraries ******************************/
-#include <MQUnifiedsensor.h>    //MQ135 sensor library
 #include "PMS.h"                //PMS5003 sensor library
 #include "bsec.h"               //BME680 sensor library
 /************************ Connectivity libraries **************************/
@@ -25,7 +23,6 @@
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
 
-#define BOARD "ESP-32"
 /***************************  PMS5003 definitions *************************/
 #define WAKE_UP 30000         // 30 seconds
 #define SLEEP 60000           // 60 seconds 
@@ -56,8 +53,6 @@ void send_data();
 /* Network variables*/
 const char* ssid = "INFINITUMC9C6_2.4";
 const char* password = "DrA32ehN9D";
-//const char* ssid = "redsatot_2.4Gnormal";
-//const char* password = "Son2008sel";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -89,6 +84,8 @@ IAQ_pollutants pollutants;
 
 String output;
 
+
+
 void setup() 
 {
   Serial.begin(115200);
@@ -116,7 +113,7 @@ void setup()
   pms.passiveMode();            // Switch to passive mode
   pms.wakeUp();
   awake_PMS = true;
-
+ 
   /*Network setup*/
   setup_wifi();                         //Init wifi network
   client.setServer(mqtt_server, 1883);  //Init server connection
@@ -128,15 +125,9 @@ void setup()
       if((int(iaqSensor.co2Equivalent) != 500) || (int((iaqSensor.breathVocEquivalent*10)) != 4))
       {
         pollutants.CO2 = iaqSensor.co2Equivalent; 
-        pollutants.VOC = iaqSensor.breathVocEquivalent * 15;
+        pollutants.VOC = iaqSensor.breathVocEquivalent;
         pollutants.temp = iaqSensor.temperature;
         pollutants.hum = iaqSensor.humidity;
-        pms.requestRead();
-        if (pms.readUntil(data))
-        {
-          pollutants.PM2_5 = data.PM_AE_UG_2_5;
-          pollutants.PM10 = data.PM_AE_UG_10_0;
-        }
         break;
       }
       else
@@ -154,53 +145,40 @@ void setup()
 
 
 
-void loop() 
-{
-    currentMillis = millis(); /* Get the current time since the program started*/
+void loop() {
+  currentMillis = millis(); /* Get the current time since the program started*/
+  if( (currentMillis - startMillis_sampling) >= SAMPLING_TIME) /* Take a data sample each 10 seconds*/
+  {
     /* BME680 sensor*/ 
-     if (iaqSensor.run()) 
-     { // If new data is available send to make the average
-      output = "";
-      output += ", " + String(iaqSensor.temperature);
-      output += ", " + String(iaqSensor.humidity);
-      output += ", " + String(iaqSensor.co2Equivalent);
-      output += ", " + String(iaqSensor.breathVocEquivalent * 15);
-
-      pollutants.CO2 = (pollutants.CO2 + iaqSensor.co2Equivalent)/2; 
-      pollutants.VOC = ((pollutants.VOC + (iaqSensor.breathVocEquivalent)*15)/2);
-      pollutants.temp = (pollutants.temp + iaqSensor.temperature)/2;
-      pollutants.hum = (pollutants.hum + iaqSensor.humidity)/2;
-      Serial.println(output);
-
-      pms.requestRead();
-      if (pms.readUntil(data))
-      {
-          Serial.print("PM 2.5 (ug/m3): ");
-          Serial.println(data.PM_AE_UG_2_5);
-          pollutants.PM2_5 = (pollutants.PM2_5 + data.PM_AE_UG_2_5)/2;
-
-          Serial.print("PM 10 (ug/m3): ");
-          Serial.println(data.PM_AE_UG_10_0);
-          pollutants.PM10 = (pollutants.PM10 + data.PM_AE_UG_10_0)/2;
-      }
-      else
-      {
-        Serial.println("No data.");
-      }
+     if (iaqSensor.run()) { // If new data is available send to make the average
+      Serial.print("BME680 CO2 [ppm]: ");
+      Serial.println(String(iaqSensor.co2Equivalent)); 
+      Serial.print("BME680 Temperature [°C]: ");
+      Serial.println(String(iaqSensor.temperature)); 
+      Serial.print("BME680 Humidity [%]: ");
+      Serial.println(String(iaqSensor.humidity)); 
+      Serial.print("BME680 VOC [ppm]: ");
+      Serial.println(String(iaqSensor.breathVocEquivalent)); 
+      pollutants.CO2 = iaqSensor.co2Equivalent; 
+      pollutants.VOC = iaqSensor.breathVocEquivalent;
+      pollutants.temp = iaqSensor.temperature;
+      pollutants.hum = iaqSensor.humidity;
      }
      else
      {
       checkBMESensorStatus();
-     }
+      }
     startMillis_sampling = currentMillis;
-    
-    currentMillis = millis();
+
+  }
+  checkPMSSensorStatus(); /* Send to sleep PMS5003 and wake up to have valid data*/
+  currentMillis = millis();
   /*Send data to the brocker each 3 minutes*/
-    if((currentMillis - lastUpdateMillis_server) >= SERVER_UPLOAD)
-    {
-      //send_data();
-      lastUpdateMillis_server = currentMillis;
-    }
+  if((currentMillis - lastUpdateMillis_server) >= SERVER_UPLOAD)
+  {
+    send_data();
+    lastUpdateMillis_server = currentMillis;
+  }
 }
 
 void setup_wifi() 
@@ -265,6 +243,53 @@ void checkBMESensorStatus(void)
       Serial.println(output);
     }
   }
+}
+
+void checkPMSSensorStatus(void)
+{
+    /* Delay time for sleep and wake up PMS5003*/
+  if(awake_PMS == true)
+  {
+    currentMillis = millis(); /* Wait 30 secons until valid data*/
+    if((currentMillis - wakeupMillis_pms) >= WAKE_UP)
+    {
+      // Clear buffer (removes potentially old data) before read. Some data could have been also sent before switching to passive mode.
+      while (Serial.available()) { Serial.read(); }
+      
+      pms.requestRead();
+      if (pms.readUntil(data))
+      {
+        Serial.print("PM 2.5 (ug/m3): ");
+        Serial.println(data.PM_AE_UG_2_5/PM2_5_CALIBRATION);  //After calibration
+        pollutants.PM2_5 = data.PM_AE_UG_2_5/PM2_5_CALIBRATION;
+        //Serial.println(data.PM_AE_UG_2_5);  //After calibration
+        //pollutants.PM2_5 = data.PM_AE_UG_2_5;
+    
+        Serial.print("PM 10.0 (ug/m3): ");
+        Serial.println(data.PM_AE_UG_10_0/PM10_CALIBRATION); //After calibration
+        pollutants.PM10 = data.PM_AE_UG_10_0/PM10_CALIBRATION;
+      }
+      else
+      {
+     Serial.println("No data from PMS5003.");
+      }
+      pms.sleep();
+      sleepMillis_pms = currentMillis;
+      awake_PMS = false;
+      sleep_PMS = true;
+    }
+  }
+  if (sleep_PMS = true)
+  {
+    currentMillis = millis();
+    /* Sleep PMS5003 during a period of time*/
+    if((currentMillis - sleepMillis_pms) >= SLEEP)
+    {
+      pms.wakeUp();
+      wakeupMillis_pms = currentMillis;
+      awake_PMS = true;
+    }
+   } 
 }
 
 void send_data()
