@@ -1,5 +1,28 @@
+# Index 
+- [IoT Air Quality Microservices](#iot-air-quality-microservices)
+  * [Environment](#environment)
+  * [Project Structure](#project-structure)
+    + [Lambdas](#lambdas)
+    + [Common](#common)
+  * [Endpoints](#endpoints)
+    + [Account](#account)
+      - [`/account`](#--account-)
+      - [`/account/login`](#--account-login-)
+      - [`/accounts/account`](#--accounts-account-)
+      - [`/account/change-password`](#--account-change-password-)
+      - [`/account/description`](#--account-description-)
+      - [`/account/title`](#--account-title-)
+    + [Phone](#phone)
+      - [`/account/phone/register`](#--account-phone-register-)
+      - [`/account/phone/verify`](#--account-phone-verify-)
+      - [`/send-sms`](#--send-sms-)
+    + [Sensors](#sensors)
+      - [`/:sensorType`](#---sensortype-)
+      - [`/:sensorType/most-recent`](#---sensortype-most-recent-)
+      - [`/:sensorType/:year/:month/:day`](#---sensortype--year--month--day-)
+      - [`/:sensorType/:year/:month`](#---sensortype--year--month-)
+      - 
 # IoT Air Quality Microservices
-
 Serverless project that includes all lambdas for the API gateway.
 
 REST API comprised of different microservices to interact with the database and provide operations such as Account Access, Sensor Data management, and SMS alerting. These microservices receive and return json objects, which makes them highly versatile.
