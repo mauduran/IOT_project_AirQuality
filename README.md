@@ -23,23 +23,23 @@ Users can visualize current and historic Air Quality levels so they can act when
 ## Services
 
 ### Frontend
-React Web App for visualization of sensor data.
+React Web App for visualization of sensor data.\
 [Project](front/air-quality-front)
 
 ### Frontend Prod
-Production ready version of the frontend. App is served statically and a proxy is used to communicate with the backend microservices.
+Production ready version of the frontend. App is served statically and a proxy is used to communicate with the backend microservices.\
 [Project](front/air-quality-front-prod)
 
 ### Backend Microservices
-AWS lambdas based REST API in charge of CRUD operations, sms alerts and interaction with the database.
+AWS lambdas based REST API in charge of CRUD operations, sms alerts and interaction with the database.\
 [Project](microservices)
 
 ### MQTT Broker
-Mosquitto MQTT broker official docker contaqiner.
+Mosquitto MQTT broker official docker contaqiner.\
 [Project](MQTT_Broker)
 
 ### MQTT Listener Server
-Server in charge of handling incoming sensor data through MQTT subscriptions and storing into the db. Also triggers SMS alerts when required.
+Server in charge of handling incoming sensor data through MQTT subscriptions and storing into the db. Also triggers SMS alerts when required.\
 [Project](MQTT_listener_server)
 
 ## Documentation
