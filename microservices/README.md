@@ -34,7 +34,7 @@ This directory contains code that is reused in multiple lambda functions. Instea
 - `API_Responses.js`: Contains the HTTP responses (200, 201, 401, 400, etc.) to be returned by the lambdas. 
 - `dates.js`: Functions to manipulate and work with dates. (Could be replaced by moment.js)
 - `Dynamo.js`: Functions that handle all the interactions to be made with the dynamo db (Get, Create, Update, etc.)
-- SensorTypes: Constant that includes the valid sensorTypes: **pm2.5, pm10, voc, co2, temperature and humidity**.
+- `SensorTypes`: Constant that includes the valid sensorTypes: **pm2.5, pm10, voc, co2, temperature and humidity**.
 
 ## Endpoints
 
