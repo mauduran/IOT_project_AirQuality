@@ -45,7 +45,7 @@ Server in charge of handling incoming sensor data through MQTT subscriptions and
 ## Documentation
 For more information on the services. Refer to the README file located inside each of the services' directories.
 - [Frontend](front/air-quality-front/README.md)
-- [Frontend=Prod](front/air-quality-front-prod/README.md)
+- [Frontend-Prod](front/air-quality-front-prod/README.md)
 - [Microservices](microservices/README.md)
 - [MQTT Broker](MQTT_Broker/README.md)
 - [MQTT listener server](MQTT_listener_server/README.md)
