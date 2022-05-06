@@ -1,14 +1,16 @@
 # IoT Air Quality Project
 
 ## Pages
-- **Sign In / Sign Up**: `/signin` - Used to create account or login.
-![image](https://user-images.githubusercontent.com/43227523/167072280-286475ab-435b-49da-8816-69677cad0e03.png)
+- **Sign In / Sign Up**: `/signin` - Used to create account or login.\
+![image](https://user-images.githubusercontent.com/43227523/167073010-f97aaa70-3f42-43c8-a467-c4f43e592ee2.png)
 
-- **Dashboard**: `/` or `dashboard` - Dashboard. Shows sensor levels as well as daily and monthly charts for sensors.
-![image](https://user-images.githubusercontent.com/43227523/167072044-510e95ec-ae8d-4ab0-9885-b593dff3925a.png)
+- **Dashboard**: `/` or `dashboard` - Dashboard. Shows sensor levels as well as daily and monthly charts for sensors.\
+![image](https://user-images.githubusercontent.com/43227523/167073170-9e770dd1-81f4-4c7a-987c-e36f1cd8fa4f.png)
 
-- **Account**: `/account` - Account settings. Allows user to see current settings and do operations such as changing the title or password for the account and registering a phone number for SMS alerts.
-![image](https://user-images.githubusercontent.com/43227523/167072079-dbf39b69-5ef0-4d2c-81c1-4c0002220934.png)
+
+- **Account**: `/account` - Account settings. Allows user to see current settings and do operations such as changing the title or password for the account and registering a phone number for SMS alerts. \
+![image](https://user-images.githubusercontent.com/43227523/167073225-48ce645f-9db7-4b80-845e-f2860f2a8cd9.png)
+
 
 
 ## Available Scripts
