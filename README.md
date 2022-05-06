@@ -49,3 +49,5 @@ For more information on the services. Refer to the README file located inside ea
 - [Microservices](microservices/README.md)
 - [MQTT Broker](MQTT_Broker/README.md)
 - [MQTT listener server](MQTT_listener_server/README.md)
+- [Air quality Arduino file](air_quality_system/README.md)
+- [BME680 driver](BME680_i2c/README.md)
