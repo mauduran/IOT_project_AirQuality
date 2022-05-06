@@ -1,7 +1,7 @@
 # IoT Air Quality Project
 
 ## Pages
-- **Sign In / Sign Up**: `/signin` - Used to create account or login.\
+- **Sign In / Sign Up**: `/signin` - Used to create account or login. \
 
 ![image](https://user-images.githubusercontent.com/43227523/167073010-f97aaa70-3f42-43c8-a467-c4f43e592ee2.png)
 
