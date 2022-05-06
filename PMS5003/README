@@ -1,0 +1,4 @@
+PMS sensor can work sending to sleep and wake up the sensor to avoid wasting life time.
+This driver sends the sensor to sleep during 60 minutes and then wakes it up to read the available data on the system.
+
+Sending to sleep can ve avoided without the pms.sleep();
