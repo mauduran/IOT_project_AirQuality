@@ -25,16 +25,7 @@
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
 
-/***************************  MQ135 definitions ***************************/
 #define BOARD "ESP-32"
-#define VOLTAGE_RESOLUTION 3.3
-#define ANALOG 34             //Analog input 0 
-#define TYPE "MQ-135"         //MQ135
-#define ADC_BIT_RESOLUTION 12
-#define RatioMQ135CleanAir 3.6//RS / R0 = 3.6 ppm 
-#define A 110.47 // value used in equation of CO2 ppm calculation
-#define B -2.862 // value used in equation of CO2 ppm calculation
-#define SAMPLING_TIME 10000   //10 seconds 
 /***************************  PMS5003 definitions *************************/
 #define WAKE_UP 30000         // 30 seconds
 #define SLEEP 60000           // 60 seconds 
@@ -44,15 +35,9 @@
 #define I2C_SDA 21            // GPIO21 SDA
 #define I2C_SCL 22            // GPIO22 SCL
 
-/************* Definitions for debug and calibration **********************/
-#define CALIBRATE_MQ135
-#define DEBUG_MODE
-
 /************************* Global definitions ****************************/
 /* Data sampling time to server*/
 #define SERVER_UPLOAD 60000*4 //Upload data to cloud each 4 minutes
-/*MQ135 functions and variables*/
-MQUnifiedsensor MQ135(BOARD, VOLTAGE_RESOLUTION, ADC_BIT_RESOLUTION, ANALOG, TYPE);
 float CO2;
 
 /*PMS functions and variables*/
@@ -71,6 +56,9 @@ void send_data();
 /* Network variables*/
 const char* ssid = "INFINITUMC9C6_2.4";
 const char* password = "DrA32ehN9D";
+//const char* ssid = "redsatot_2.4Gnormal";
+//const char* password = "Son2008sel";
+
 WiFiClient espClient;
 PubSubClient client(espClient);
 /* MQTT connectivity  */
@@ -99,31 +87,16 @@ struct IAQ_pollutants{
   };
 IAQ_pollutants pollutants;
 
-#ifdef CALIBRATE_MQ135
-void calibrate_MQ135()
-{
-  Serial.print("Calibrating MQ135 sensor please wait.");
-  float calcR0 = 0;
-  for(int i = 1; i<=10; i ++)
-  {
-    MQ135.update(); // Update data, the arduino will be read the voltage on the analog pin
-    calcR0 += MQ135.calibrate(RatioMQ135CleanAir);
-    Serial.print(".");
-  }
-  MQ135.setR0(calcR0/10);
-  Serial.println("  done!.");
-  if(isinf(calcR0)) {Serial.println("Warning: Conection issue founded, R0 is infite (Open circuit detected) please check your wiring and supply"); while(1);}
-  if(calcR0 == 0){Serial.println("Warning: Conection issue founded, R0 is zero (Analog pin with short circuit to ground) please check your wiring and supply"); while(1);}
-}
-#endif
+String output;
 
-void setup() {
+void setup() 
+{
   Serial.begin(115200);
   if(Serial) Serial.println("Serial is open");
   /* BME680 setup*/
   Wire.begin(I2C_SDA,I2C_SCL); 
   iaqSensor.begin(BME680_I2C_ADDR_SECONDARY, Wire);
-  checkIaqSensorStatus();
+  checkBMESensorStatus();
   bsec_virtual_sensor_t sensorList[10] = {
     BSEC_OUTPUT_RAW_TEMPERATURE,
     BSEC_OUTPUT_RAW_PRESSURE,
@@ -137,72 +110,97 @@ void setup() {
     BSEC_OUTPUT_SENSOR_HEAT_COMPENSATED_HUMIDITY,
   };
   iaqSensor.updateSubscription(sensorList, 10, BSEC_SAMPLE_RATE_LP);
-  checkIaqSensorStatus();
+  checkBMESensorStatus();
   /* PMS5003 setup*/
   Serial2.begin(9600);          // PMS5003 UART TX2 RX2 
   pms.passiveMode();            // Switch to passive mode
   pms.wakeUp();
   awake_PMS = true;
-  /* MQ135 setup: Set math model to calculate the PPM concentration and the value of constants*/
-  MQ135.setRegressionMethod(1); //_PPM =  a*ratio^b
-  MQ135.setA(A); MQ135.setB(B); // Configure the equation to to calculate CO2 concentration
-  
-  MQ135.init(); 
-  
-#ifdef calibrate_MQ135
-  calibrate_MQ135();
-#endif
-  MQ135.serialDebug(false);
 
   /*Network setup*/
   setup_wifi();                         //Init wifi network
   client.setServer(mqtt_server, 1883);  //Init server connection
+
+  while(1)
+  {
+    if (iaqSensor.run()) 
+    {
+      if((int(iaqSensor.co2Equivalent) != 500) || (int((iaqSensor.breathVocEquivalent*10)) != 4))
+      {
+        pollutants.CO2 = iaqSensor.co2Equivalent; 
+        pollutants.VOC = iaqSensor.breathVocEquivalent * 15;
+        pollutants.temp = iaqSensor.temperature;
+        pollutants.hum = iaqSensor.humidity;
+        pms.requestRead();
+        if (pms.readUntil(data))
+        {
+          pollutants.PM2_5 = data.PM_AE_UG_2_5;
+          pollutants.PM10 = data.PM_AE_UG_10_0;
+        }
+        break;
+      }
+      else
+      {
+        Serial.println("Waiting calibration");
+      }
+    } 
+    else 
+    {
+      checkBMESensorStatus();
+    }
+  } 
 }
 
 
 
 
-
-void loop() {
-  currentMillis = millis(); /* Get the current time since the program started*/
-  if( (currentMillis - startMillis_sampling) >= SAMPLING_TIME) /* Take a data sample each 10 seconds*/
-  {
-    /* MQ135 sensor*/
-    MQ135.update(); // Read the voltage on the analog pin  
-    CO2 = MQ135.readSensor(); // Sensor will read CO2 concentration using the model and a and b values setted before or in the setup   
-
-    Serial.print("MQ135 CO2: ");   
-    Serial.println(CO2); 
+void loop() 
+{
+    currentMillis = millis(); /* Get the current time since the program started*/
     /* BME680 sensor*/ 
-     if (iaqSensor.run()) { // If new data is available send to make the average
-      Serial.print("BME680 CO2 [ppm]: ");
-      Serial.println(String(iaqSensor.co2Equivalent)); 
-      Serial.print("BME680 Temperature [°C]: ");
-      Serial.println(String(iaqSensor.temperature)); 
-      Serial.print("BME680 Humidity [%]: ");
-      Serial.println(String(iaqSensor.humidity)); 
-      Serial.print("BME680 VOC [ppm]: ");
-      Serial.println(String(iaqSensor.breathVocEquivalent)); 
-      pollutants.CO2 = iaqSensor.co2Equivalent; 
-      pollutants.VOC = iaqSensor.breathVocEquivalent;
-      pollutants.temp = iaqSensor.temperature;
-      pollutants.hum = iaqSensor.humidity;
+     if (iaqSensor.run()) 
+     { // If new data is available send to make the average
+      output = "";
+      output += ", " + String(iaqSensor.temperature);
+      output += ", " + String(iaqSensor.humidity);
+      output += ", " + String(iaqSensor.co2Equivalent);
+      output += ", " + String(iaqSensor.breathVocEquivalent * 15);
+
+      pollutants.CO2 = (pollutants.CO2 + iaqSensor.co2Equivalent)/2; 
+      pollutants.VOC = ((pollutants.VOC + (iaqSensor.breathVocEquivalent)*15)/2);
+      pollutants.temp = (pollutants.temp + iaqSensor.temperature)/2;
+      pollutants.hum = (pollutants.hum + iaqSensor.humidity)/2;
+      Serial.println(output);
+
+      pms.requestRead();
+      if (pms.readUntil(data))
+      {
+          Serial.print("PM 2.5 (ug/m3): ");
+          Serial.println(data.PM_AE_UG_2_5);
+          pollutants.PM2_5 = (pollutants.PM2_5 + data.PM_AE_UG_2_5)/2;
+
+          Serial.print("PM 10 (ug/m3): ");
+          Serial.println(data.PM_AE_UG_10_0);
+          pollutants.PM10 = (pollutants.PM10 + data.PM_AE_UG_10_0)/2;
+      }
+      else
+      {
+        Serial.println("No data.");
+      }
      }
      else
      {
       checkBMESensorStatus();
-      }
+     }
     startMillis_sampling = currentMillis;
-
-  }
-  checkPMSSensorStatus(); /* Send to sleep PMS5003 and wake up to have valid data*/
-  currentMillis = millis();
+    
+    currentMillis = millis();
   /*Send data to the brocker each 3 minutes*/
-  if((currentMillis - lastUpdateMillis_server) >= SERVER_UPLOAD)
-  {
-    send_data();
-    lastUpdateMillis_server = currentMillis;
-  }
+    if((currentMillis - lastUpdateMillis_server) >= SERVER_UPLOAD)
+    {
+      //send_data();
+      lastUpdateMillis_server = currentMillis;
+    }
 }
 
 void setup_wifi() 
@@ -269,50 +267,14 @@ void checkBMESensorStatus(void)
   }
 }
 
-void checkPMSSensorStatus(void)
-{
-    /* Delay time for sleep and wake up PMS5003*/
-  if(awake_PMS == true)
-  {
-    currentMillis = millis(); /* Wait 30 secons until valid data*/
-    if((currentMillis - wakeupMillis_pms) >= WAKE_UP)
-    {
-      pms.requestRead();
-      if (pms.readUntil(data))
-      {
-        Serial.print("PM 2.5 (ug/m3): ");
-        Serial.println(data.PM_AE_UG_2_5/PM2_5_CALIBRATION);  //After calibration
-        pollutants.PM2_5 = data.PM_AE_UG_2_5/PM2_5_CALIBRATION;
-    
-        Serial.print("PM 10.0 (ug/m3): ");
-        Serial.println(data.PM_AE_UG_10_0/PM10_CALIBRATION); //After calibration
-        pollutants.PM10 = data.PM_AE_UG_10_0/PM10_CALIBRATION;
-      }
-      else
-      {
-     Serial.println("No data from PMS5003.");
-      }
-      pms.sleep();
-      sleepMillis_pms = currentMillis;
-      awake_PMS = false;
-      sleep_PMS = true;
-    }
-  }
-  if (sleep_PMS = true)
-  {
-    currentMillis = millis();
-    /* Sleep PMS5003 during a period of time*/
-    if( ((currentMillis - sleepMillis_pms) >= SLEEP)
-    {
-      pms.wakeUp();
-      wakeupMillis_pms = currentMillis;
-      awake_PMS = true;
-    }
-   } 
-}
-
 void send_data()
 {
+  if (!client.connected()) 
+  {
+    reconnect();
+  }
+  client.loop();
+  
   StaticJsonBuffer<300> JSONbuffer;
   JsonObject& JSONencoder = JSONbuffer.createObject();
   char JSONmessageBuffer[100];  
@@ -321,6 +283,9 @@ void send_data()
   JSONencoder["value"] = String(pollutants.temp);
   JSONencoder["measurement"] = "°C";
   JSONencoder["accountPassword"] = "test123";
+  JSONencoder.printTo(JSONmessageBuffer, sizeof(JSONmessageBuffer));
+  Serial.println("Sending temperature message to MQTT topic..");
+  Serial.println(JSONmessageBuffer);
   
   if (client.publish("test/temperature", JSONmessageBuffer) == true) 
   {
@@ -336,7 +301,7 @@ void send_data()
   JSONencoder["accountPassword"] = "test123";
 
   JSONencoder.printTo(JSONmessageBuffer, sizeof(JSONmessageBuffer));
-  Serial.println("Sending temperature message to MQTT topic..");
+  Serial.println("Sending humidity message to MQTT topic..");
   Serial.println(JSONmessageBuffer);
   
   if (client.publish("test/humidity", JSONmessageBuffer) == true) 
@@ -353,10 +318,10 @@ void send_data()
   JSONencoder["accountPassword"] = "test123";
 
   JSONencoder.printTo(JSONmessageBuffer, sizeof(JSONmessageBuffer));
-  Serial.println("Sending humidity  message to MQTT topic..");
+  Serial.println("Sending VOC  message to MQTT topic..");
   Serial.println(JSONmessageBuffer);
   
-  if (client.publish("test/voc_equivalent", JSONmessageBuffer) == true) 
+  if (client.publish("test/voc", JSONmessageBuffer) == true) 
   {
     Serial.println("Success sending VOC message");
   } 
@@ -373,7 +338,7 @@ void send_data()
   Serial.println("Sending CO2  message to MQTT topic..");
   Serial.println(JSONmessageBuffer);
   
-  if (client.publish("test/CO2", JSONmessageBuffer) == true) 
+  if (client.publish("test/co2", JSONmessageBuffer) == true) 
   {
     Serial.println("Success sending CO2 message");
   } 
@@ -389,7 +354,7 @@ void send_data()
   Serial.println("Sending PM2.5  message to MQTT topic..");
   Serial.println(JSONmessageBuffer);
   
-  if (client.publish("test/pm2_5", JSONmessageBuffer) == true) 
+  if (client.publish("test/pm2.5", JSONmessageBuffer) == true) 
   {
     Serial.println("Success sending PM2.5 message");
   } 
