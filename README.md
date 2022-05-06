@@ -20,5 +20,32 @@ Users can visualize current and historic Air Quality levels so they can act when
 ## Technical Architecture
 ![image](https://user-images.githubusercontent.com/43227523/167076636-396cbbdf-5d97-4355-857e-cc6601f75020.png)
 
+## Services
+
+### Frontend
+React Web App for visualization of sensor data.
+[Project](front/air-quality-front)
+
+### Frontend Prod
+Production ready version of the frontend. App is served statically and a proxy is used to communicate with the backend microservices.
+[Project](front/air-quality-front-prod)
+
+### Backend Microservices
+AWS lambdas based REST API in charge of CRUD operations, sms alerts and interaction with the database.
+[Project](microservices)
+
+### MQTT Broker
+Mosquitto MQTT broker official docker contaqiner.
+[Project](MQTT_Broker)
+
+### MQTT Listener Server
+Server in charge of handling incoming sensor data through MQTT subscriptions and storing into the db. Also triggers SMS alerts when required.
+[Project](MQTT_listener_server)
+
 ## Documentation
 For more information on the services. Refer to the README file located inside each of the services' directories.
+- [Frontend](front/air-quality-front/README.md)
+- [Frontend=Prod](front/air-quality-front-prod/README.md)
+- [Microservices](microservices/README.md)
+- [MQTT Broker](MQTT_Broker/README.md)
+- [MQTT listener server](MQTT_listener_server/README.md)
