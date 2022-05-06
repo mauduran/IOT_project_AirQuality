@@ -5,7 +5,7 @@
 
 ![image](https://user-images.githubusercontent.com/43227523/167073010-f97aaa70-3f42-43c8-a467-c4f43e592ee2.png)
 
-- **Dashboard**: `/` or `dashboard` - Dashboard. Shows sensor levels as well as daily and monthly charts for sensors.
+- **Dashboard**: `/` or `/dashboard` - Dashboard. Shows sensor levels as well as daily and monthly charts for sensors.
 
 ![image](https://user-images.githubusercontent.com/43227523/167073170-9e770dd1-81f4-4c7a-987c-e36f1cd8fa4f.png)
 
