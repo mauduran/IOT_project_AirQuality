@@ -12,6 +12,30 @@ Note: This project is deployed to AWS and uses the credentials stored in the mac
 - **tableName**: The name of the table in DynamoDB. 
 - **tokenSecret**: Secret used for JWT tokens.
 
+## Project Structure
+Because the project contains multiple lambdas. There is no project entrypoints. 
+
+When the `npm run deploy` command is executed. Webpack is used to package each lambda function with its code and common dependencies and then is deployed into the AWS account registered on the machine.
+
+The `lambdas` dir contains the directories on which all the lambda functions and common code is specified.
+
+### Lambdas
+List of all lambda functions implemented. These are divided into categories and there is a directory for each. Each file will be its own lambda function.
+Lambda categories:
+- Account
+- Phone
+- Sensors
+
+### Common
+This directory contains code that is reused in multiple lambda functions. Instead of repeating it everywere single files are created and imported wherever needed. These are injected into each lambda when the solution is packaged in order to deploy.
+
+**List of common files**
+- `Air_Quality_Levels.js`: Constant which has all the Air Quality level categories that trigger an SMS message.
+- `API_Responses.js`: Contains the HTTP responses (200, 201, 401, 400, etc.) to be returned by the lambdas. 
+- `dates.js`: Functions to manipulate and work with dates. (Could be replaced by moment.js)
+- `Dynamo.js`: Functions that handle all the interactions to be made with the dynamo db (Get, Create, Update, etc.)
+- SensorTypes: Constant that includes the valid sensorTypes: **pm2.5, pm10, voc, co2, temperature and humidity**.
+
 ## Endpoints
 
 ### Account
